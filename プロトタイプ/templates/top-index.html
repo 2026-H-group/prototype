@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Re:Tailor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../static/top-styles.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+
+      <a href="#" class="logo">Re:Tailor</a>
+
+      <div class="header-icons">
+        <button class="icon-btn" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M12 3a5 5 0 0 0-5 5v3.4c0 .5-.2 1-.5 1.4L5 15.5c-.6.8 0 2 1 2h12c1 0 1.6-1.2 1-2l-1.5-2.1c-.3-.4-.5-.9-.5-1.4V8a5 5 0 0 0-5-5Z"/><path d="M9.5 19a2.5 2.5 0 0 0 5 0"/></svg>
+        </button>
+        <a href="buy.html"><button class="icon-btn" id="cartBtn" aria-label="Cart">
+          <svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 11.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L20 7H5.3"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="icon-btn" aria-label="Account">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+        </button></a>
+      </div>
+    </div>
+
+    <!-- NAV ROW -->
+    <nav class="nav-row" id="navRow">
+      <div class="pill-group">
+        <div class="dropdown">
+          <select class="category-select" id="categorySelect">
+              <option value="handmade">ハンドメイド</option>
+              <option value="used">古着</option>
+          </select>        
+        </div>
+        <button class="pill">新着</button>
+        <button class="pill">セール</button>
+      </div>
+
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" placeholder="Search…" id="searchInput" aria-label="Search products">
+      </div>
+
+      <div class="pill-group gender-group">
+        <button class="pill toggle-pill active" data-gender="men">男性</button>
+        <button class="pill toggle-pill" data-gender="women">女性</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <nav class="mobile-drawer" id="mobileDrawer" aria-label="Main menu">
+    <button class="icon-btn drawer-close" id="drawerClose" aria-label="Close menu">
+      <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <a href="#" class="drawer-logo">Re:Tailor</a>
+    <a href="#" class="drawer-link">ホーム</a>
+    <a href="#products" class="drawer-link">ショップ</a>
+    <a href="#" class="drawer-link">アバウト</a>
+    <a href="#" class="drawer-link">コンタクト</a>
+    <a href="buy.html" class="drawer-link">カート商品</a>
+    <a href="syuppin_itiran.html" class="drawer-link">商品を出品</a>
+    <a href="signup.html" class="drawer-link">サインイン</a>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-card">
+        <p class="hero-mark">Re:Tailor</p>
+        <div class="stitch-divider"></div>
+        <h1 class="hero-title">誰かの手から<br>誰かの手へ渡る</h1>
+        <p class="hero-sub">Secondhand clothing and handmade goods, passed on to someone who'll love them next.</p>
+
+        <div class="hero-actions">
+          <a href="#products" class="btn btn-primary">Shop Now</a>
+          <a href="#products" class="btn btn-outline">View Collection</a>
+        </div>
+
+        <div class="feature-bar">
+          <div class="feature-divider"></div>
+          <div class="feature">
+            <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 9v4h4"/></svg>
+            <span>簡単に返品</span>
+          </div>
+          <div class="feature-divider"></div>
+          <div class="feature">
+            <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            <span>安全な支払い</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI COORDINATE ADVISOR -->
+    <section class="ai-advisor">
+      <div class="ai-advisor-card">
+        <div class="ai-advisor-text">
+          <p class="ai-advisor-title">★ 何が合うかわかりませんか？</p>
+          <p class="ai-advisor-sub">AIコーディネートアドバイザーをお試しください。</p>
+        </div>
+        <button class="btn btn-advisor" id="aiAdvisorBtn">Get styled</button>
+      </div>
+    </section>
+
+    <!-- PRODUCT BROWSE -->
+    <section class="browse" id="products">
+      <div class="browse-header">
+        <h2 class="browse-title">必要なものをすべてチェック</h2>
+        <p class="browse-sub">すべての品に、物語があります。そこに、新たな章を。</p>
+      </div>
+
+      <div class="category-row" id="categoryRow">
+        <button class="cat-pill active" data-cat="all">一覧表示</button>
+        <button class="cat-pill" data-cat="outwear">アウター</button>
+        <button class="cat-pill" data-cat="bottom">ボトムス</button>
+        <button class="cat-pill" data-cat="tops">トップス</button>
+        <button class="cat-pill" data-cat="accessories">アクセサリー</button>
+      </div>
+
+      <div class="product-grid" id="productGrid">
+        <!-- product cards injected by script.js -->
+      </div>
+    </section>
+  </main>
+
+
+  <script src="../static/top-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="../static/syuppin.css">
+<title>出品一覧</title>
+</head>
+<body>
+  <div class="site">
+    <div class="header">
+      <div class="header-inner">
+        <a class="back-btn" href="top-index.html" title="戻る">←</a>
+        <div class="header-title">出品一覧</div>
+        <a class="add-btn" href="syuppin.html">＋出品</a>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="tabs">
+        <button class="tab active">販売中</button>
+        <button class="tab">売却済み</button>
+        <button class="tab">下書き</button>
+      </div>
+
+      <div class="list">
+        <div class="card">
+          <div class="card-img empty"></div>
+          <div class="card-body">
+            <div class="card-name">ヴィンテージデニムジャケット</div>
+            <div class="card-price">￥8,900</div>
+            <span class="card-status">販売中</span>
+            <div class="card-actions">
+              <a class="btn-edit" href="naiyouhensyuu.html">編集</a>
+              <a class="btn-withdraw" href="torisage.html">取り下げ</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img empty"></div>
+          <div class="card-body">
+            <div class="card-name">ハンドメイドニットセーター</div>
+            <div class="card-price">￥5,400</div>
+            <span class="card-status">販売中</span>
+            <div class="card-actions">
+              <a class="btn-edit" href="naiyouhensyuu.html">編集</a>
+              <a class="btn-withdraw" href="torisage.html">取り下げ</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img empty"></div>
+          <div class="card-body">
+            <div class="card-name">コットンワンピース</div>
+            <div class="card-price">￥3,200</div>
+            <span class="card-status">販売中</span>
+            <div class="card-actions">
+              <a class="btn-edit" href="naiyouhensyuu.html">編集</a>
+              <a class="btn-withdraw" href="torisage.html">取り下げ</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.tab').forEach(function (t) {
+      t.addEventListener('click', function () {
+        document.querySelectorAll('.tab').forEach(function (x) { x.classList.remove('active'); });
+        t.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
