@@ -8,7 +8,5 @@
 
 ４．HTMLはtemplatesへ、script,cssはstaticで作成
 
-
-
 追加記載事項があれば、別途記載します。
-
+あいうえお
