@@ -153,16 +153,6 @@ function setupDrawer() {
   backdrop.addEventListener("click", close);
 }
 
-// ---- 8. AIコーディネートアドバイザーのボタン ----
-// 今はまだAI機能が完成していないので、仮の動作にしている。
-// 将来ここでアドバイザー用のモーダルやページを開く処理に差し替える。
-function setupAiAdvisor() {
-  const btn = document.getElementById("aiAdvisorBtn");
-  btn.addEventListener("click", () => {
-    alert("AI coordinate advisor coming soon! ✨");
-  });
-}
-
 // ---- 9. DOMの準備ができたら、まとめて初期化する ----
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
@@ -170,5 +160,4 @@ document.addEventListener("DOMContentLoaded", () => {
   setupProductActions();
   setupGenderToggle();
   setupDrawer();
-  setupAiAdvisor();
 });
