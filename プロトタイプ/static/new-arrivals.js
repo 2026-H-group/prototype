@@ -17,9 +17,9 @@ function formatDate(iso) {
 function cardTemplate(product) {
   return `
     <article class="product-card">
-      <div class="product-image">${product.category}</div>
+      <a class="product-image" href="detail.html?id=${product.id}" aria-label="${product.name}の商品詳細">${product.category}</a>
       <div class="product-info">
-        <p class="product-name">${product.name}</p>
+        <a class="product-name" href="detail.html?id=${product.id}">${product.name}</a>
         <p class="product-meta">${formatDate(product.listedAt)}</p>
         <div class="product-footer">
           <span class="product-price">¥${product.price.toLocaleString()}</span>

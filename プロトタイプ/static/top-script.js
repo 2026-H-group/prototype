@@ -46,10 +46,10 @@ function cardTemplate(product) {
 
   return `
     <article class="product-card">
-        <div class="product-image tint-${product.category}">
+      <a href="detail.html?id=${product.id}" class="product-image tint-${product.category}" aria-label="${product.name}の商品詳細">
             ${TEXT[product.icon]}
-        </div>      <div class="product-info">
-        <p class="product-name">${product.name}</p>
+      </a>      <div class="product-info">
+      <a class="product-name" href="detail.html?id=${product.id}">${product.name}</a>
         <div class="product-footer">
           <span class="product-price">¥${product.price.toLocaleString()}</span>
           <div class="product-actions">
