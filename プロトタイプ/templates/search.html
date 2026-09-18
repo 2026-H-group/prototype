@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Re:Tailor - 検索</title>
+    <!-- FontAwesome (アイコン用) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+
+    <!-- ヘッダー（上部のピルボタンを撤去しシンプル化） -->
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-left"></div>
+            <div class="logo"><a href="top-index.html">Re:Tailor</a></div>
+            <div class="header-right-icons">
+                <a href="notification.html" aria-label="Notifications"><i class="fa-regular fa-bell"></i></a>
+                <a href="buy.html" aria-label="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="#" aria-label="Account"><i class="fa-regular fa-user"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 中央メイン検索セクション -->
+        <section class="hero-search-section">
+            <h1 class="search-title">服を仕立て直し、新しい循環を。</h1>
+            <p class="search-subtitle">リメイクアイテムの購入から、お気に入りの服の仕立て直し依頼まで</p>
+
+            <!-- 中央の大型検索バー (⑩) -->
+            <form class="main-search-bar" action="#" method="GET">
+                <i class="fa-solid fa-magnifying-glass search-icon-left"></i>
+                <input type="text" placeholder="アイテム名、素材、仕立て屋を検索..." aria-label="Search">
+                <button type="submit" class="search-submit-btn">Search</button>
+            </form>
+
+            <!-- 検索欄のすぐ下に配置したカタログ・カテゴリー選択フィルター -->
+            <div class="search-catalog-filters">
+                <button class="catalog-pill-btn active">すべて</button>
+                <button class="catalog-pill-btn">Hand Made <i class="fa-solid fa-chevron-down"></i></button>
+                <button class="catalog-pill-btn">New Arrival</button>
+                <button class="catalog-pill-btn">Sales</button>
+                <button class="catalog-pill-btn">Men</button>
+                <button class="catalog-pill-btn">Women</button>
+                <button class="catalog-pill-btn">サイズ直し・修理</button>
+                <button class="catalog-pill-btn">オーダーメイド</button>
+            </div>
+        </section>
+
+        <!-- カタログ／検索結果 グリッドセクション -->
+        <section class="catalog-section">
+            <div class="catalog-header">
+                <h2 class="catalog-title">Catalog</h2>
+            </div>
+
+            <div class="grid-container">
+                <!-- カタログアイテム 1 -->
+                <article class="card">
+                    <div class="card-image">[ Item Image ]</div>
+                    <div class="card-body">
+                        <div class="card-tag">Upcycled Item</div>
+                        <h3 class="card-title">ヴィンテージデニムの再構築ワイドパンツ</h3>
+                        <div class="card-meta">
+                            <span>@Studio_K</span>
+                            <strong>¥14,800</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- カタログアイテム 2 -->
+                <article class="card">
+                    <div class="card-image" style="background-color: #D6D6D6; color: #555;">[ Service Image ]</div>
+                    <div class="card-body">
+                        <div class="card-tag">Alteration Service</div>
+                        <h3 class="card-title">ジャケットのサイズ調整＆裏地張り替え</h3>
+                        <div class="card-meta">
+                            <span>佐藤裁縫所</span>
+                            <strong>¥8,500〜</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- カタログアイテム 3 -->
+                <article class="card">
+                    <div class="card-image" style="background-color: #E2E2E2; color: #777;">[ Item Image ]</div>
+                    <div class="card-body">
+                        <div class="card-tag">Upcycled Item</div>
+                        <h3 class="card-title">古着スウェット再構築 パッチワークフーディ</h3>
+                        <div class="card-meta">
+                            <span>@RE_Craft</span>
+                            <strong>¥18,000</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- カタログアイテム 4 -->
+                <article class="card">
+                    <div class="card-image" style="background-color: #CCCCCC; color: #444;">[ Service Image ]</div>
+                    <div class="card-body">
+                        <div class="card-tag">Custom Order</div>
+                        <h3 class="card-title">着物・和服からの洋装フルリメイク依頼</h3>
+                        <div class="card-meta">
+                            <span>アトリエ 雅</span>
+                            <strong>¥32,000〜</strong>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
