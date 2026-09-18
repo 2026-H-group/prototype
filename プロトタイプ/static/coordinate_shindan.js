@@ -12,11 +12,15 @@
 // ====================================================
 
 // ユーザーが選んだアイテム（本来はマイクローゼットや出品データから取得する）
-const selectedItems = [
+const defaultItems = [
   { id: 3, name: "ヴィンテージデニムジャケット", price: "¥8,900" },
   { id: 2, name: "ハンドメイドニットセーター", price: "¥5,400" },
   { id: 6, name: "コットンワイドパンツ", price: "¥4,200" },
 ];
+const closetItems = JSON.parse(localStorage.getItem("reTailorMyCloset") || "[]");
+const selectedItems = closetItems.length
+  ? closetItems.map((item) => ({ name: item.name, price: `${item.categoryLabel} / ${item.color || "色未登録"}`, image: item.image, closet: true }))
+  : defaultItems;
 
 // AIが「この着こなしに合う」として返すおすすめアイテムの候補セット
 // （診断のたびにこの中から1セットをランダムに選ぶ）
@@ -70,7 +74,7 @@ function renderItemGrid(containerId, items) {
     .map(
       (item) => `
         <div class="coord-item">
-          <a class="img-box empty" href="detail.html?id=${item.id}" aria-label="${item.name}の商品詳細"></a>
+          <a class="img-box${item.image ? " has-image" : " empty"}" href="${item.closet ? "my-closet.html" : `detail.html?id=${item.id}`}" aria-label="${item.name}の情報">${item.image ? `<img src="${item.image}" alt="${item.name}の写真">` : ""}</a>
           <p class="coord-item-name">${item.name}</p>
           <p class="coord-item-price">${item.price}</p>
         </div>

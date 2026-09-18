@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マイページ | Re:Tailor</title>
+  <link rel="stylesheet" href="../static/my-page.css">
+</head>
+<body>
+  <header class="topbar"><a class="back-link" href="top-index.html" aria-label="トップページへ戻る">←</a><a class="brand" href="top-index.html">Re:Tailor</a><a class="cart-link" href="buy.html">カート</a></header>
+  <main class="page-shell">
+    <section class="profile-head">
+      <div class="avatar" id="avatar">Y</div>
+      <div class="profile-copy"><p class="eyebrow">MY PAGE</p><h1 id="userName">ユーザー名</h1><p id="joinedDate">2025年6月から利用</p><div class="rating"><span>★★★★★</span><strong id="ratingValue">4.5</strong><span>（<b id="ratingCount">32</b>件の評価）</span></div></div>
+      <a class="edit-button" href="profile-edit.html">プロフィールを編集</a>
+    </section>
+    <nav class="tabs" aria-label="マイページの表示切替"><button class="tab active" type="button" data-tab="listing">出品中</button><button class="tab" type="button" data-tab="reviews">評価</button><button class="tab" type="button" data-tab="favorites">お気に入り</button></nav>
+    <section class="tab-panel active" id="listing" aria-labelledby="listing-tab"><div class="panel-heading"><h2>出品中の商品</h2><span>3件</span></div><div class="product-grid"><article class="product-card"><div class="product-image">アウター</div><h3>ヴィンテージデニムジャケット</h3><p>￥8,900</p><a href="naiyouhensyuu.html">出品内容を編集</a></article><article class="product-card"><div class="product-image">ハンドメイド</div><h3>ハンドメイドニットセーター</h3><p>￥5,400</p><a href="naiyouhensyuu.html">出品内容を編集</a></article><article class="product-card"><div class="product-image">ワンピース</div><h3>コットンワンピース</h3><p>￥3,200</p><a href="naiyouhensyuu.html">出品内容を編集</a></article></div></section>
+    <section class="tab-panel" id="reviews" aria-labelledby="reviews-tab"><div class="panel-heading"><h2>自分が投稿したレビュー</h2><span>3件</span></div><div class="review-list"><article class="review-card"><div><strong>★★★★★</strong><time>2026/09/12</time></div><h3>ヴィンテージデニムジャケット</h3><p>梱包も丁寧で状態も良く満足です。</p></article><article class="review-card"><div><strong>★★★★☆</strong><time>2026/08/28</time></div><h3>ハンドメイドニットセーター</h3><p>サイズもぴったりで気に入りました。</p></article><article class="review-card"><div><strong>★★★★★</strong><time>2026/07/04</time></div><h3>コットンワンピース</h3><p>素敵な商品をありがとうございました。</p></article></div></section>
+    <section class="tab-panel" id="favorites" aria-labelledby="favorites-tab"><div class="panel-heading"><h2>お気に入り登録した商品</h2><span>3件</span></div><div class="product-grid"><a class="product-card" href="detail.html?id=1"><div class="product-image">トップス</div><h3>リネンシャツ</h3><p>￥850</p></a><a class="product-card" href="detail.html?id=3"><div class="product-image">アウター</div><h3>ヴィンテージデニムジャケット</h3><p>￥8,900</p></a><a class="product-card" href="detail.html?id=8"><div class="product-image">アクセサリー</div><h3>ビーズネックレス</h3><p>￥400</p></a></div></section>
+  </main>
+  <script src="../static/my-page.js"></script>
+</body>
+</html>
