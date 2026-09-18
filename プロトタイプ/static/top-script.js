@@ -25,7 +25,7 @@ const products = [
 // 今選ばれているカテゴリーは何か、を管理する状態（state）
 const state = {
   liked: new Set(),
-  cart: new Set(),
+  cart: new Set(JSON.parse(localStorage.getItem("reTailorCart") || "[]")),
   activeCategory: "all",
 };
 
@@ -104,6 +104,7 @@ function setupProductActions() {
     }
     if (action === "cart") {
       state.cart.has(id) ? state.cart.delete(id) : state.cart.add(id);
+      localStorage.setItem("reTailorCart", JSON.stringify([...state.cart]));
       updateCartCount();
     }
     renderProducts();
@@ -156,6 +157,7 @@ function setupDrawer() {
 // ---- 9. DOMの準備ができたら、まとめて初期化する ----
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
+  updateCartCount();
   setupCategoryFilter();
   setupProductActions();
   setupGenderToggle();

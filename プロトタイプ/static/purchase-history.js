@@ -1,0 +1,2 @@
+const history=[{id:1,name:"シンプルブラックTシャツ",price:3980,category:"トップス",date:"2026/09/18"},{id:3,name:"ヴィンテージデニムジャケット",price:8900,category:"アウター",date:"2026/08/30"}];
+document.getElementById("historyList").innerHTML=history.map((item)=>`<article class="history-card"><div class="history-image">${item.category}</div><div><h2>${item.name}</h2><p>購入日：${item.date}　価格：¥${item.price.toLocaleString()}</p><p>取引が完了しました。</p></div><a class="review-link" href="review.html?product=${item.id}">レビューを投稿する</a></article>`).join("");

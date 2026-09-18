@@ -1,0 +1,14 @@
+const catalog = [{id:1,name:"Wool Blend Coat",price:900},{id:2,name:"Denim Trousers",price:1200},{id:3,name:"Knit Cardigan",price:500},{id:4,name:"Canvas Tote Bag",price:700},{id:5,name:"Linen Shirt",price:850},{id:6,name:"Pleated Skirt",price:1100},{id:7,name:"Corduroy Jacket",price:1500},{id:8,name:"Beaded Necklace",price:400}];
+const ids = (new URLSearchParams(location.search).get("items") || "1").split(",").map(Number);
+const selected = ids.map((id) => catalog.find((item) => item.id === id)).filter(Boolean);
+const total = selected.reduce((sum, item) => sum + item.price, 0);
+const yen = (value) => `¥${value.toLocaleString()}`;
+const name = document.getElementById("confirmProductName");
+const price = document.querySelector(".confirm-product .product-info dl div:last-child dd");
+const summary = document.querySelectorAll(".confirm-summary .summary-list strong");
+if (name) name.textContent = selected.map((item) => item.name).join("、");
+if (price) price.textContent = yen(total);
+if (summary[0]) summary[0].textContent = yen(total);
+if (summary[2]) summary[2].textContent = yen(total + 300);
+const purchaseButton = document.querySelector(".purchase-action");
+if (purchaseButton) purchaseButton.href = `purchase-history.html?items=${ids.join(",")}`;
