@@ -157,9 +157,12 @@ a {
     min-height: 38px;
     padding: 7px 16px;
 
+    display: inline-flex;
+    align-items: center;
     border: 1px solid var(--border);
     background: #fff;
     color: var(--text);
+    text-decoration: none;
 
     cursor: pointer;
 }
