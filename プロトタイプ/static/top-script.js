@@ -19,6 +19,9 @@ const state = {
   cart: new Set(JSON.parse(localStorage.getItem("reTailorCart") || "[]")),
   activeCategory: "all",
 };
+const recentKey = "reTailorRecentlyViewed";
+function saveRecentProduct(id) { const recent = JSON.parse(localStorage.getItem(recentKey) || "[]").filter((itemId) => itemId !== id); recent.unshift(id); localStorage.setItem(recentKey, JSON.stringify(recent.slice(0, 4))); }
+function renderRecentProducts() { const ids = JSON.parse(localStorage.getItem(recentKey) || "[]"); const items = ids.map((id) => products.find((product) => product.id === id)).filter(Boolean); const grid = document.getElementById("recentProducts"); const empty = document.getElementById("recentEmpty"); if (!grid || !empty) return; empty.hidden = items.length > 0; grid.innerHTML = items.map((item) => `<a class="recent-card" href="detail.html?id=${item.id}"><span class="recent-image tint-${item.category}">${TEXT[item.icon] || item.category}</span><strong>${item.name}</strong><span>¥${item.price.toLocaleString()}</span></a>`).join(""); }
 
 // ---- 2. 商品カードをグリッドに描画する ----
 function renderProducts() {
@@ -41,6 +44,7 @@ function cardTemplate(product) {
             ${TEXT[product.icon]}
       </a>      <div class="product-info">
       <a class="product-name" href="detail.html?id=${product.id}">${product.name}</a>
+        <a class="product-seller" href="seller.html?seller=${encodeURIComponent(product.seller)}">出品者：${product.seller}</a>
         <div class="product-footer">
           <span class="product-price">¥${product.price.toLocaleString()}</span>
           <div class="product-actions">
@@ -102,6 +106,7 @@ function setupProductActions() {
     renderProducts();
   });
 }
+function setupRecentTracking() { document.getElementById("productGrid").addEventListener("click", (event) => { const link = event.target.closest('a[href^="detail.html?id="]'); if (!link) return; saveRecentProduct(Number(new URL(link.href).searchParams.get("id"))); }); }
 
 function updateCartCount() {
   const el = document.getElementById("cartCount");
@@ -152,6 +157,8 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartCount();
   setupCategoryFilter();
   setupProductActions();
+  renderRecentProducts();
+  setupRecentTracking();
   setupGenderToggle();
   setupDrawer();
 });

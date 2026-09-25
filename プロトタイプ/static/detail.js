@@ -18,6 +18,7 @@ function setText(id, value) { document.getElementById(id).textContent = value; }
 function renderProduct(product) {
   document.title = `${product.name} | Re:Tailor`;
   setText("productName", product.name); setText("productType", product.type); setText("productCategory", product.category); setText("sellerName", product.seller); setText("sellerNameLarge", product.seller);
+  document.getElementById("sellerName").href = `seller.html?seller=${encodeURIComponent(product.seller)}`;
   setText("productPrice", `¥${product.price.toLocaleString()}`); setText("listedAt", product.listedAt); setText("productRating", "★★★★★"); setText("ratingText", product.rating); setText("reviewCount", `(${product.reviews}件)`); setText("productImage", product.image);
   setText("detailType", product.type);
   ["condition", "brand", "size", "color", "material", "purchaseDate", "shipping", "handling", "description"].forEach((key) => setText(key, product[key]));
@@ -29,10 +30,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const product = getProduct();
   if (!product) { document.getElementById("productDetail").innerHTML = '<p class="eyebrow">PRODUCT NOT FOUND</p><h1>商品が見つかりません</h1><p>商品一覧から別の商品を選択してください。</p><p><a href="top-index.html#products">商品一覧へ戻る</a></p>'; return; }
   renderProduct(product); renderReviews();
+  const recent = JSON.parse(localStorage.getItem("reTailorRecentlyViewed") || "[]").filter((id) => id !== Number(productId)); recent.unshift(Number(productId)); localStorage.setItem("reTailorRecentlyViewed", JSON.stringify(recent.slice(0, 4)));
   const favorites = new Set(JSON.parse(localStorage.getItem("reTailorFavorites") || "[]"));
   const favoriteButton = document.getElementById("favoriteButton");
   const isFavorite = favorites.has(Number(productId));
   favoriteButton.classList.toggle("active", isFavorite); favoriteButton.setAttribute("aria-pressed", isFavorite); favoriteButton.textContent = isFavorite ? "♥ お気に入り済み" : "♡ お気に入り";
   document.getElementById("buyButton").addEventListener("click", () => { location.href = `buy.html?items=${productId}`; });
   favoriteButton.addEventListener("click", (event) => { const button = event.currentTarget; const active = button.classList.toggle("active"); button.setAttribute("aria-pressed", active); button.textContent = active ? "♥ お気に入り済み" : "♡ お気に入り"; active ? favorites.add(Number(productId)) : favorites.delete(Number(productId)); localStorage.setItem("reTailorFavorites", JSON.stringify([...favorites])); });
+  const followButton = document.getElementById("followButton");
+  const following = new Set(JSON.parse(localStorage.getItem("reTailorFollowing") || "[]"));
+  const followerCounts = JSON.parse(localStorage.getItem("reTailorFollowerCounts") || "{}");
+  let followerCount = followerCounts[product.seller] || 18;
+  const updateFollowButton = () => { const active = following.has(product.seller); followButton.classList.toggle("active", active); followButton.setAttribute("aria-pressed", active); followButton.textContent = active ? "フォロー中" : "フォローする"; document.getElementById("sellerFollowers").textContent = `フォロワー ${followerCount}人`; };
+  updateFollowButton();
+  followButton.addEventListener("click", () => { const active = following.has(product.seller); active ? (following.delete(product.seller), followerCount = Math.max(0, followerCount - 1)) : (following.add(product.seller), followerCount += 1); followerCounts[product.seller] = followerCount; localStorage.setItem("reTailorFollowing", JSON.stringify([...following])); localStorage.setItem("reTailorFollowerCounts", JSON.stringify(followerCounts)); updateFollowButton(); });
 });
