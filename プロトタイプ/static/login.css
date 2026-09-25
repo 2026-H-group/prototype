@@ -24,7 +24,8 @@ padding: 40px 50px;
 
 /* ログインフォーム */
 .box {
-width: 430px;
+width: 100%;
+max-width: 430px;
 text-align: center;
 }
 

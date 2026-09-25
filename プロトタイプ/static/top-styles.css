@@ -569,3 +569,34 @@ a {
     font-weight: 700;
 }
 
+.product-info {
+    padding: 14px;
+}
+
+.product-name {
+    display: block;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.product-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.product-price {
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 700;
+    text-align: right;
+}
+
+.product-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+}
+

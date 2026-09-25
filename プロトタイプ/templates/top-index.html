@@ -17,13 +17,13 @@
         <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
 
-      <a href="#" class="logo">Re:Tailor</a>
+      <a href="top-index.html" class="logo">Re:Tailor</a>
 
       <div class="header-icons">
         <a class="icon-btn" href="notification.html" aria-label="お知らせ">
           <svg viewBox="0 0 24 24"><path d="M12 3a5 5 0 0 0-5 5v3.4c0 .5-.2 1-.5 1.4L5 15.5c-.6.8 0 2 1 2h12c1 0 1.6-1.2 1-2l-1.5-2.1c-.3-.4-.5-.9-.5-1.4V8a5 5 0 0 0-5-5Z"/><path d="M9.5 19a2.5 2.5 0 0 0 5 0"/></svg>
         </a>
-        <a class="icon-btn" href="buy.html" id="cartBtn" aria-label="カート">
+        <a class="icon-btn" href="cart.html" id="cartBtn" aria-label="カート">
           <svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 11.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L20 7H5.3"/></svg>
           <span class="cart-count" id="cartCount">0</span>
         </a>
@@ -64,12 +64,12 @@
     <button class="icon-btn drawer-close" id="drawerClose" aria-label="Close menu">
       <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
     </button>
-    <a href="#" class="drawer-logo">Re:Tailor</a>
-    <a href="#" class="drawer-link">ホーム</a>
+    <a href="top-index.html" class="drawer-logo">Re:Tailor</a>
+    <a href="top-index.html" class="drawer-link">ホーム</a>
     <a href="#products" class="drawer-link">ショップ</a>
     <a href="./about-index.html" class="drawer-link">アバウト</a>
-    <a href="#" class="drawer-link">コンタクト</a>
-    <a href="buy.html" class="drawer-link">カート商品</a>
+    <a href="about-index.html#contact" class="drawer-link">コンタクト</a>
+    <a href="cart.html" class="drawer-link">カート商品</a>
     <a href="syuppin_itiran.html" class="drawer-link">商品を出品</a>
     <a href="personality.html" class="drawer-link">自分の個性を見つける</a>
     <a href="my-closet.html" class="drawer-link">マイクローゼット</a>
@@ -100,7 +100,7 @@
           <p class="ai-advisor-title">★ 何が合うかわかりませんか？</p>
           <p class="ai-advisor-sub">AIコーディネートアドバイザーをお試しください。</p>
         </div>
-        <a class="btn btn-advisor" href="coordinate_shindan.html">個性を発掘する</a>
+        <a class="btn btn-advisor" href="coordinate_shindan.html">Get styled</a>
       </div>
     </section>
 
@@ -113,10 +113,14 @@
 
       <div class="category-row" id="categoryRow">
         <button class="cat-pill active" data-cat="all">一覧表示</button>
+        <button class="cat-pill" data-cat="tops">トップス</button>
         <button class="cat-pill" data-cat="outwear">アウター</button>
         <button class="cat-pill" data-cat="bottom">ボトムス</button>
-        <button class="cat-pill" data-cat="tops">トップス</button>
+        <button class="cat-pill" data-cat="onepiece">ワンピース</button>
+        <button class="cat-pill" data-cat="shoes">シューズ</button>
+        <button class="cat-pill" data-cat="bag">バッグ</button>
         <button class="cat-pill" data-cat="accessories">アクセサリー</button>
+        <button class="cat-pill" data-cat="other">その他</button>
       </div>
 
       <div class="product-grid" id="productGrid">
@@ -126,6 +130,7 @@
   </main>
 
 
+  <script src="../static/product-data.js"></script>
   <script src="../static/top-script.js"></script>
 </body>
 </html>

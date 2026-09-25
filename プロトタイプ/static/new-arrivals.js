@@ -23,7 +23,7 @@ function cardTemplate(product) {
         <p class="product-meta">${formatDate(product.listedAt)}</p>
         <div class="product-footer">
           <span class="product-price">¥${product.price.toLocaleString()}</span>
-          <a class="cart-link" href="buy.html">カートへ</a>
+          <a class="cart-link" href="cart.html">カートへ</a>
         </div>
       </div>
     </article>`;

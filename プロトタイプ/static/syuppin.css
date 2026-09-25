@@ -154,6 +154,9 @@
     }
     .material-row { font-size: 16px; color: #333; }
     .material-row input[type="text"] { margin-top: 8px; }
+    .shipping-box { display: grid; gap: 10px; }
+    .shipping-box label { color: #333; font-size: 15px; }
+    .shipping-box .select-wrap + label { margin-top: 6px; }
     .footer {
         display: flex;
         justify-content: center;
@@ -224,6 +227,7 @@
     .target-name { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
     .target-price { font-size: 20px; color: var(--olive); font-weight: 700; }
     .required { color: #b23b3b; margin-left: 6px; font-size: 13px; }
+    .optional { color: #888; margin-left: 6px; font-size: 13px; }
     textarea {
         width: 100%;
         border: 1px solid var(--border);
@@ -481,3 +485,18 @@
     }
     .btn-edit { background: var(--olive); color: #fff; border: none; }
     .btn-withdraw { background: #fff; color: var(--olive); border: 1px solid var(--olive); }
+    @media (max-width: 600px) {
+        .header-inner, .page { padding-left: 16px; padding-right: 16px; }
+        .images { grid-template-columns: repeat(2, 1fr); }
+        .footer { flex-direction: column; }
+        .update-btn, .withdraw-link, .submit-btn { width: 100%; min-width: 0; }
+    }
+    body { background: #f4f4f4; }
+    .header-inner { min-height: 72px; padding-top: 0; padding-bottom: 0; }
+    .page { padding-top: 46px; padding-bottom: 70px; }
+    .page > .content { background: #fff; border: 1px solid var(--border); padding: 28px; }
+    .page > .content + .footer { margin-top: 20px; }
+    @media (max-width: 600px) {
+        .page { padding-top: 28px; padding-bottom: 48px; }
+        .page > .content { padding: 18px; }
+    }

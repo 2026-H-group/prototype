@@ -1,13 +1,4 @@
-const products = [
-  { id: 1, name: "Wool Blend Coat",  price: 900,  category: "outwear",     icon: "coat" },
-  { id: 2, name: "Denim Trousers",   price: 1200, category: "bottom",      icon: "trousers" },
-  { id: 3, name: "Knit Cardigan",    price: 500,  category: "tops",        icon: "cardigan" },
-  { id: 4, name: "Canvas Tote Bag",  price: 700,  category: "accessories", icon: "bag" },
-  { id: 5, name: "Linen Shirt",      price: 850,  category: "tops",        icon: "shirt" },
-  { id: 6, name: "Pleated Skirt",    price: 1100, category: "bottom",      icon: "skirt" },
-  { id: 7, name: "Corduroy Jacket",  price: 1500, category: "outwear",     icon: "jacket" },
-  { id: 8, name: "Beaded Necklace",  price: 400,  category: "accessories", icon: "necklace" },
-];
+const products = window.reTailorProducts.map((product) => ({ ...product, category: product.categoryKey }));
 
 // 服の種類ごとに文字で表示（アイコンは形が崩れるためNG）。
   const TEXT = {
@@ -24,8 +15,8 @@ const products = [
 // どの商品が「いいね」されているか、カートに入っているか、
 // 今選ばれているカテゴリーは何か、を管理する状態（state）
 const state = {
-  liked: new Set(),
-  cart: new Set(),
+  liked: new Set(JSON.parse(localStorage.getItem("reTailorFavorites") || "[]")),
+  cart: new Set(JSON.parse(localStorage.getItem("reTailorCart") || "[]")),
   activeCategory: "all",
 };
 
@@ -101,9 +92,11 @@ function setupProductActions() {
 
     if (action === "like") {
       state.liked.has(id) ? state.liked.delete(id) : state.liked.add(id);
+      localStorage.setItem("reTailorFavorites", JSON.stringify([...state.liked]));
     }
     if (action === "cart") {
       state.cart.has(id) ? state.cart.delete(id) : state.cart.add(id);
+      localStorage.setItem("reTailorCart", JSON.stringify([...state.cart]));
       updateCartCount();
     }
     renderProducts();
@@ -156,6 +149,7 @@ function setupDrawer() {
 // ---- 9. DOMの準備ができたら、まとめて初期化する ----
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
+  updateCartCount();
   setupCategoryFilter();
   setupProductActions();
   setupGenderToggle();

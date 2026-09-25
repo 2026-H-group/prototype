@@ -31,7 +31,7 @@
 
           
 
-            <form action="/signup" method="post">
+            <form id="signupForm" novalidate>
 
                 <!-- メールアドレス -->
                 <div class="input-group">
@@ -91,6 +91,7 @@
                     value="サインアップ"
                     class="button"
                 >
+                <p id="signupError" class="field-error" role="alert"></p>
 
             </form>
 
@@ -109,5 +110,6 @@
 
     </div>
 
+    <script src="../static/auth.js"></script>
 </body>
 </html>

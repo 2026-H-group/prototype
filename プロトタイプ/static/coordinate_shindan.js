@@ -17,8 +17,16 @@ const defaultItems = [
   { id: 2, name: "ハンドメイドニットセーター", price: "¥5,400" },
   { id: 6, name: "コットンワイドパンツ", price: "¥4,200" },
 ];
+const purchaseItems = [
+  { id: 1, name: "シンプルブラックTシャツ", price: "¥3,980", category: "トップス", color: "ブラック", size: "M", purchase: true },
+  { id: 3, name: "ヴィンテージデニムジャケット", price: "¥8,900", category: "アウター", color: "インディゴ", size: "L", purchase: true },
+];
 const closetItems = JSON.parse(localStorage.getItem("reTailorMyCloset") || "[]");
-const selectedItems = closetItems.length
+const purchasedItemId = Number(new URLSearchParams(window.location.search).get("item"));
+const purchasedItem = purchaseItems.find((item) => item.id === purchasedItemId);
+const selectedItems = purchasedItem
+  ? [purchasedItem]
+  : closetItems.length
   ? closetItems.map((item) => ({ name: item.name, price: `${item.categoryLabel} / ${item.color || "色未登録"}`, image: item.image, closet: true }))
   : defaultItems;
 
@@ -74,7 +82,7 @@ function renderItemGrid(containerId, items) {
     .map(
       (item) => `
         <div class="coord-item">
-          <a class="img-box${item.image ? " has-image" : " empty"}" href="${item.closet ? "my-closet.html" : `detail.html?id=${item.id}`}" aria-label="${item.name}の情報">${item.image ? `<img src="${item.image}" alt="${item.name}の写真">` : ""}</a>
+          <a class="img-box${item.image ? " has-image" : " empty"}" href="${item.purchase ? `purchase-history-detail.html?id=${item.id}` : item.closet ? "my-closet.html" : `detail.html?id=${item.id}`}" aria-label="${item.name}の情報">${item.image ? `<img src="${item.image}" alt="${item.name}の写真">` : ""}</a>
           <p class="coord-item-name">${item.name}</p>
           <p class="coord-item-price">${item.price}</p>
         </div>
