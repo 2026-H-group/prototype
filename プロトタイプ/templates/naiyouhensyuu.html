@@ -30,13 +30,13 @@
 
         <div class="field">
           <div class="field-label">商品名</div>
-          <input type="text" maxlength="20" placeholder="商品名を入力" />
+          <input id="editName" type="text" maxlength="20" placeholder="商品名を入力" />
         </div>
 
         <div class="field">
           <div class="field-label">カテゴリ</div>
           <div class="select-wrap">
-            <select>
+            <select id="editCategory">
               <option value="" selected disabled hidden>カテゴリを選択</option>
               <option>トップス</option>
               <option>アウター</option>
@@ -52,7 +52,7 @@
 
         <div class="field">
           <div class="field-label">価格</div>
-          <input type="text" inputmode="numeric" maxlength="5" placeholder="￥価格を入力" />
+          <input id="editPrice" type="text" inputmode="numeric" maxlength="5" placeholder="￥価格を入力" />
         </div>
 
         <div class="field">
@@ -64,22 +64,24 @@
             </div>
             <div class="material-row">
               素材：
-              <input type="text" maxlength="20" placeholder="素材を入力（例：コットン）" />
+              <input id="editMaterial" type="text" maxlength="20" placeholder="素材を入力（例：コットン）" />
             </div>
           </div>
         </div>
 
         <div class="field">
           <div class="field-label">その他詳細</div>
-          <textarea rows="5" maxlength="225" placeholder="汚れや傷の有無"></textarea>
+          <textarea id="editDescription" rows="5" maxlength="225" placeholder="汚れや傷の有無"></textarea>
         </div>
       </div>
 
       <div class="footer">
         <a class="withdraw-link" href="torisage.html">出品を取り下げる</a>
-        <button class="update-btn">更新する</button>
+        <button id="editSubmit" class="update-btn" type="button">更新する</button>
       </div>
     </div>
   </div>
+</body>
+  <script src="../static/edit-listing.js"></script>
 </body>
 </html>
