@@ -13,7 +13,7 @@ const reviews = [
   { name: "haru", rating: "★★★★☆", date: "2026/08/28", text: "サイズ感がちょうどよく、これからたくさん着たいと思います。" }
 ];
 
-function getProduct() { return products[new URLSearchParams(location.search).get("id")] || products[1]; }
+function getProduct() { const id = new URLSearchParams(location.search).get("id"); if (!id) return products[1]; const base = products[id]; const shared = window.getReTailorProduct(id); return base && shared ? { ...base, ...shared } : null; }
 function setText(id, value) { document.getElementById(id).textContent = value; }
 function renderProduct(product) {
   document.title = `${product.name} | Re:Tailor`;
@@ -25,7 +25,14 @@ function renderProduct(product) {
 }
 function renderReviews() { document.getElementById("reviewList").innerHTML = reviews.map((review) => `<article class="review-item"><div class="review-meta"><span><strong>${review.name}</strong><span class="stars">${review.rating}</span></span><time>${review.date}</time></div><p>${review.text}</p></article>`).join(""); }
 document.addEventListener("DOMContentLoaded", () => {
-  renderProduct(getProduct()); renderReviews();
-  document.getElementById("buyButton").addEventListener("click", () => { location.href = "buy.html"; });
-  document.getElementById("favoriteButton").addEventListener("click", (event) => { const button = event.currentTarget; const active = button.classList.toggle("active"); button.setAttribute("aria-pressed", active); button.textContent = active ? "♥ お気に入り済み" : "♡ お気に入り"; });
+  const productId = new URLSearchParams(location.search).get("id") || "1";
+  const product = getProduct();
+  if (!product) { document.getElementById("productDetail").innerHTML = '<p class="eyebrow">PRODUCT NOT FOUND</p><h1>商品が見つかりません</h1><p>商品一覧から別の商品を選択してください。</p><p><a href="top-index.html#products">商品一覧へ戻る</a></p>'; return; }
+  renderProduct(product); renderReviews();
+  const favorites = new Set(JSON.parse(localStorage.getItem("reTailorFavorites") || "[]"));
+  const favoriteButton = document.getElementById("favoriteButton");
+  const isFavorite = favorites.has(Number(productId));
+  favoriteButton.classList.toggle("active", isFavorite); favoriteButton.setAttribute("aria-pressed", isFavorite); favoriteButton.textContent = isFavorite ? "♥ お気に入り済み" : "♡ お気に入り";
+  document.getElementById("buyButton").addEventListener("click", () => { location.href = `buy.html?items=${productId}`; });
+  favoriteButton.addEventListener("click", (event) => { const button = event.currentTarget; const active = button.classList.toggle("active"); button.setAttribute("aria-pressed", active); button.textContent = active ? "♥ お気に入り済み" : "♡ お気に入り"; active ? favorites.add(Number(productId)) : favorites.delete(Number(productId)); localStorage.setItem("reTailorFavorites", JSON.stringify([...favorites])); });
 });

@@ -154,6 +154,9 @@
     }
     .material-row { font-size: 16px; color: #333; }
     .material-row input[type="text"] { margin-top: 8px; }
+    .shipping-box { display: grid; gap: 10px; }
+    .shipping-box label { color: #333; font-size: 15px; }
+    .shipping-box .select-wrap + label { margin-top: 6px; }
     .footer {
         display: flex;
         justify-content: center;
@@ -481,3 +484,9 @@
     }
     .btn-edit { background: var(--olive); color: #fff; border: none; }
     .btn-withdraw { background: #fff; color: var(--olive); border: 1px solid var(--olive); }
+    @media (max-width: 600px) {
+        .header-inner, .page { padding-left: 16px; padding-right: 16px; }
+        .images { grid-template-columns: repeat(2, 1fr); }
+        .footer { flex-direction: column; }
+        .update-btn, .withdraw-link, .submit-btn { width: 100%; min-width: 0; }
+    }

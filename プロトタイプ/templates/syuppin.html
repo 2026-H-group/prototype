@@ -31,13 +31,13 @@
 
         <div class="field">
           <div class="field-label">商品名</div>
-          <input type="text" maxlength="20" placeholder="商品名を入力" />
+          <input id="listingName" name="name" type="text" maxlength="20" placeholder="商品名を入力" />
         </div>
 
         <div class="field">
           <div class="field-label">カテゴリ</div>
           <div class="select-wrap">
-            <select>
+            <select id="listingCategory" name="category">
               <option value="" selected disabled hidden>カテゴリを選択</option>
               <option>トップス</option>
               <option>アウター</option>
@@ -53,7 +53,7 @@
 
         <div class="field">
           <div class="field-label">価格</div>
-          <input type="text" inputmode="numeric" maxlength="5" placeholder="￥価格を入力" />
+          <input id="listingPrice" name="price" type="text" inputmode="numeric" maxlength="5" placeholder="￥価格を入力" />
         </div>
 
         <div class="field">
@@ -65,21 +65,37 @@
             </div>
             <div class="material-row">
               素材：
-              <input type="text" maxlength="20" placeholder="素材を入力（例：コットン）" />
+              <input id="listingMaterial" name="material" type="text" maxlength="20" placeholder="素材を入力（例：コットン）" />
             </div>
           </div>
         </div>
 
         <div class="field">
           <div class="field-label">その他詳細</div>
-          <textarea rows="5" maxlength="225" placeholder="汚れや傷の有無"></textarea>
+          <textarea id="listingDescription" name="description" rows="5" maxlength="225" placeholder="汚れや傷の有無"></textarea>
+        </div>
+
+        <div class="field">
+          <div class="field-label">配送・取引について</div>
+          <div class="condition-box shipping-box">
+            <label for="shippingMethod">配送方法</label>
+            <div class="select-wrap"><select id="shippingMethod" name="shippingMethod"><option value="メルカリ便">メルカリ便</option><option value="ゆうパック">ゆうパック</option></select></div>
+            <label for="shippingHandling">発送まで</label>
+            <div class="select-wrap"><select id="shippingHandling" name="shippingHandling"><option value="1〜2日">1〜2日</option><option value="2〜3日">2〜3日</option><option value="4〜7日">4〜7日</option></select></div>
+            <label for="shippingCost">送料</label>
+            <div class="select-wrap"><select id="shippingCost" name="shippingCost"><option value="出品者負担（送料込み）">出品者負担（送料込み）</option></select></div>
+            <label for="returnPolicy">返品・交換</label>
+            <div class="select-wrap"><select id="returnPolicy" name="returnPolicy"><option value="購入者都合による返品はできません">購入者都合による返品はできません</option><option value="商品説明と異なる場合のみ対応">商品説明と異なる場合のみ対応</option></select></div>
+          </div>
         </div>
       </div>
 
+      <p id="listingError" class="required" role="alert"></p>
       <div class="footer">
-        <a class="submit-btn" href="syuppin_itiran.html">出品する</a>
+        <a id="listingSubmit" class="submit-btn" href="syuppin_itiran.html">出品する</a>
       </div>
     </div>
   </div>
+  <script src="../static/syuppin.js"></script>
 </body>
 </html>

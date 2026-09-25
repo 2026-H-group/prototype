@@ -28,15 +28,18 @@
         </div>
 
         <div class="field-label">取り下げ理由の記入<span class="required">必須</span></div>
-        <textarea rows="6" maxlength="225" placeholder="商品を取り下げる理由を入力してください"></textarea>
+        <textarea id="withdrawReason" rows="6" maxlength="225" placeholder="商品を取り下げる理由を入力してください"></textarea>
+        <p id="withdrawError" class="required" role="alert"></p>
         <div class="note">取り下げると、この商品は出品一覧から非表示になります。<br>この操作は購入希望者には通知されません。</div>
       </div>
 
       <div class="footer">
-        <a class="btn-cancel" href="javascript:history.back()">キャンセル</a>
-        <a class="btn-withdraw" href="syuppin_itiran.html">取り下げる</a>
+        <a class="btn-cancel" href="syuppin_itiran.html">キャンセル</a>
+        <a id="withdrawSubmit" class="btn-withdraw" href="syuppin_itiran.html">取り下げる</a>
       </div>
     </div>
   </div>
+</body>
+  <script src="../static/withdraw.js"></script>
 </body>
 </html>

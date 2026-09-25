@@ -18,7 +18,7 @@
             <div class="header-right-icons">
                 <a href="notification.html" aria-label="Notifications"><i class="fa-regular fa-bell"></i></a>
                 <a href="buy.html" aria-label="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
-                <a href="#" aria-label="Account"><i class="fa-regular fa-user"></i></a>
+                <a href="my-page.html" aria-label="Account"><i class="fa-regular fa-user"></i></a>
             </div>
         </div>
     </header>
@@ -30,9 +30,9 @@
             <p class="search-subtitle">リメイクアイテムの購入から、お気に入りの服の仕立て直し依頼まで</p>
 
             <!-- 中央の大型検索バー (⑩) -->
-            <form class="main-search-bar" action="#" method="GET">
+            <form id="searchForm" class="main-search-bar" action="search.html" method="GET">
                 <i class="fa-solid fa-magnifying-glass search-icon-left"></i>
-                <input type="text" placeholder="アイテム名、素材、仕立て屋を検索..." aria-label="Search">
+                <input id="searchInput" name="q" type="text" placeholder="アイテム名、素材、仕立て屋を検索..." aria-label="Search">
                 <button type="submit" class="search-submit-btn">Search</button>
             </form>
 
@@ -55,7 +55,8 @@
                 <h2 class="catalog-title">Catalog</h2>
             </div>
 
-            <div class="grid-container">
+            <p id="searchStatus" role="status"></p>
+            <div class="grid-container" id="searchResults">
                 <!-- カタログアイテム 1 -->
                 <article class="card">
                     <div class="card-image">[ Item Image ]</div>
@@ -110,6 +111,7 @@
             </div>
         </section>
     </main>
+    <script src="../static/search.js"></script>
 
 </body>
 </html>
