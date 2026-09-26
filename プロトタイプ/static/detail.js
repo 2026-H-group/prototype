@@ -18,7 +18,9 @@ function setText(id, value) { document.getElementById(id).textContent = value; }
 function renderProduct(product) {
   document.title = `${product.name} | Re:Tailor`;
   setText("productName", product.name); setText("productType", product.type); setText("productCategory", product.category); setText("sellerName", product.seller); setText("sellerNameLarge", product.seller);
-  document.getElementById("sellerName").href = `seller.html?seller=${encodeURIComponent(product.seller)}`;
+  const sellerUrl = `seller.html?seller=${encodeURIComponent(product.seller)}&fromProduct=${product.id}`;
+  document.getElementById("sellerName").href = sellerUrl;
+  document.getElementById("sellerProfileLink").href = sellerUrl;
   setText("productPrice", `¥${product.price.toLocaleString()}`); setText("listedAt", product.listedAt); setText("productRating", "★★★★★"); setText("ratingText", product.rating); setText("reviewCount", `(${product.reviews}件)`); setText("productImage", product.image);
   setText("detailType", product.type);
   ["condition", "brand", "size", "color", "material", "purchaseDate", "shipping", "handling", "description"].forEach((key) => setText(key, product[key]));

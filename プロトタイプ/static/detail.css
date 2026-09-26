@@ -48,8 +48,14 @@ h3 { margin: 25px 0 8px; font-size: 16px; }
 .description { max-width: 760px; margin: 0; white-space: pre-line; }
 .compact-list { grid-template-columns: 1fr; }
 .seller-card { display: flex; align-items: center; gap: 14px; }
+.seller-profile-link { min-width: 0; flex: 1; display: flex; align-items: center; gap: 14px; color: inherit; text-decoration: none; }
+.seller-profile-link:hover .seller-profile-copy h3 { text-decoration: underline; }
+.seller-profile-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.seller-profile-copy { min-width: 0; display: grid; gap: 2px; }
+.seller-profile-copy h3 { margin: 0; }
+.seller-stats,.muted { display: block; }
+.profile-link-label { margin-top: 4px; color: var(--sub); font-size: 12px; }
 .seller-avatar { width: 52px; height: 52px; display: grid; place-items: center; background: var(--accent); color: var(--white); border-radius: 50%; font-size: 20px; font-weight: 700; }
-.seller-card h3 { margin: 0; }
 .seller-card p { margin: 2px 0; font-size: 13px; }
 .follow-button { margin-left: auto; padding: 9px 15px; border: 1px solid var(--accent); background: var(--white); cursor: pointer; white-space: nowrap; }
 .follow-button.active { background: var(--accent); color: var(--white); }

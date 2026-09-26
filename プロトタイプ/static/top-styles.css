@@ -219,6 +219,10 @@ a {
     outline: none;
 }
 
+.search-wrap { display: block; text-decoration: none; }
+.search-placeholder { display: block; height: 40px; padding: 8px 14px 8px 40px; border: 1px solid var(--border); background: #fff; color: #777; font-size: 13px; }
+.search-wrap:hover .search-placeholder { border-color: #555; }
+
 .search-wrap input:focus {
     border-color: #555;
 }

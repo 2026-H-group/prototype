@@ -1,5 +1,12 @@
 const sellerId = new URLSearchParams(location.search).get("seller") || "linen_days";
 const sellerProducts = window.reTailorProducts.filter((item) => item.seller === sellerId);
+const returnProductId = new URLSearchParams(location.search).get("fromProduct");
+const returnProduct = window.getReTailorProduct(returnProductId);
+if (returnProduct && returnProduct.seller === sellerId) {
+	const backLink = document.getElementById("sellerBackLink");
+	backLink.href = `detail.html?id=${returnProduct.id}`;
+	backLink.textContent = "← 商品詳細へ";
+}
 const sellerName = document.getElementById("sellerName");
 const following = new Set(JSON.parse(localStorage.getItem("reTailorFollowing") || "[]"));
 const followerCounts = JSON.parse(localStorage.getItem("reTailorFollowerCounts") || "{}");
