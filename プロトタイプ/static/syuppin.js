@@ -1,4 +1,5 @@
 const listingKey = "reTailorListings";
+const latestListingKey = "reTailorLatestListing";
 const sampleListings = [
   { id: "sample-1", name: "ヴィンテージデニムジャケット", price: 8900, category: "アウター", status: "販売中" },
   { id: "sample-2", name: "ハンドメイドニットセーター", price: 5400, category: "トップス", status: "販売中" },
@@ -27,9 +28,23 @@ function setupListingForm() {
       error.textContent = "商品名、カテゴリ、価格を入力してください。";
       return;
     }
+    event.preventDefault();
+    const condition = document.querySelector('input[name="condition"]:checked');
+    const listing = {
+      id: Date.now(), name, category, price, status: "販売中",
+      condition: condition ? (condition.value === "new" ? "新品" : "中古") : "未選択",
+      material: document.getElementById("listingMaterial").value.trim(),
+      description: document.getElementById("listingDescription").value.trim(),
+      shippingMethod: document.getElementById("shippingMethod").value,
+      shippingHandling: document.getElementById("shippingHandling").value,
+      shippingCost: document.getElementById("shippingCost").value,
+      returnPolicy: document.getElementById("returnPolicy").value
+    };
     const listings = getListings();
-    listings.unshift({ id: Date.now(), name, category, price, status: "販売中" });
+    listings.unshift(listing);
     saveListings(listings);
+    localStorage.setItem(latestListingKey, JSON.stringify(listing));
+    window.location.href = "syuppin_complete.html";
   });
 }
 
