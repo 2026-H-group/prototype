@@ -1,12 +1,92 @@
 const tabs = document.querySelectorAll('.tab');
 const panels = document.querySelectorAll('.tab-panel');
 tabs.forEach((tab) => tab.addEventListener('click', () => {
-  tabs.forEach((item) => item.classList.toggle('active', item === tab));
+  tabs.forEach((item) => {
+    const selected = item === tab;
+    item.classList.toggle('active', selected);
+    item.setAttribute('aria-selected', String(selected));
+  });
   panels.forEach((panel) => panel.classList.toggle('active', panel.id === tab.dataset.tab));
 }));
 const profile = JSON.parse(localStorage.getItem('reTailorProfile') || '{}');
 if (profile.name) { document.getElementById('userName').textContent = profile.name; document.getElementById('avatar').textContent = profile.name.slice(0, 1); }
 if (profile.joined) { const [year, month] = profile.joined.split('-'); document.getElementById('joinedDate').textContent = `${year}年${Number(month)}月から利用`; }
+
+const readArray = (key) => {
+  try {
+    const value = JSON.parse(localStorage.getItem(key) || '[]');
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
+  }
+};
+
+const formatPrice = (value) => `￥${Number(value || 0).toLocaleString('ja-JP')}`;
+const mockListings = [
+  { id: 'sample-1', name: 'ヴィンテージデニムジャケット', price: 8900, category: 'アウター', status: '販売中' },
+  { id: 'sample-2', name: 'ハンドメイドニットセーター', price: 5400, category: 'トップス', status: '販売中' },
+  { id: 'sample-3', name: 'コットンワンピース', price: 3200, category: 'ワンピース', status: '販売中' }
+];
+
+function createProductCard(product, { href, editHref } = {}) {
+  const card = document.createElement(editHref ? 'article' : 'a');
+  card.className = 'product-card';
+  if (href) card.href = href;
+  const image = document.createElement('div');
+  image.className = 'product-image';
+  image.setAttribute('role', 'img');
+  image.setAttribute('aria-label', `${product.name}の商品画像`);
+  image.textContent = product.category || '商品';
+  const name = document.createElement('h3');
+  name.textContent = product.name;
+  const price = document.createElement('p');
+  price.textContent = formatPrice(product.price);
+  card.append(image, name, price);
+  if (editHref) {
+    const edit = document.createElement('a');
+    edit.href = editHref;
+    edit.textContent = '出品内容を編集';
+    card.append(edit);
+  }
+  return card;
+}
+
+const storedListings = localStorage.getItem('reTailorListings');
+const listings = (storedListings === null ? mockListings : readArray('reTailorListings')).filter((item) => item.status === '販売中');
+const listingGrid = document.getElementById('userListings');
+document.getElementById('listingCount').textContent = `${listings.length}件`;
+listings.forEach((item) => listingGrid.append(createProductCard(item, { editHref: `naiyouhensyuu.html?id=${encodeURIComponent(item.id)}` })));
+document.getElementById('listingEmpty').hidden = listings.length > 0;
+
+const favoriteIds = new Set(readArray('reTailorFavorites').map(Number));
+const favorites = (window.reTailorProducts || []).filter((item) => favoriteIds.has(item.id));
+const favoriteGrid = document.getElementById('favoriteProducts');
+document.getElementById('favoriteCount').textContent = `${favorites.length}件`;
+favorites.forEach((item) => favoriteGrid.append(createProductCard(item, { href: `detail.html?id=${item.id}` })));
+document.getElementById('favoriteEmpty').hidden = favorites.length > 0;
+
+const reviews = readArray('reTailorReviews');
+const reviewList = document.getElementById('userReviews');
+document.getElementById('userReviewCount').textContent = `${reviews.length}件`;
+reviews.forEach((review) => {
+  const card = document.createElement('article');
+  card.className = 'review-card';
+  const header = document.createElement('div');
+  const rating = document.createElement('strong');
+  rating.textContent = `${'★'.repeat(Number(review.rating) || 0)}${'☆'.repeat(5 - (Number(review.rating) || 0))}`;
+  const date = document.createElement('time');
+  date.dateTime = review.createdAt || '';
+  date.textContent = review.createdAt ? new Date(review.createdAt).toLocaleDateString('ja-JP') : '';
+  header.append(rating, date);
+  const title = document.createElement('h3');
+  title.textContent = review.productName || '商品レビュー';
+  const comment = document.createElement('p');
+  comment.textContent = review.comment || '';
+  card.append(header, title, comment);
+  reviewList.append(card);
+});
+document.getElementById('reviewEmpty').hidden = reviews.length > 0;
+
 const followingCount = document.getElementById('followingCount');
 const followerCount = document.getElementById('followerCount');
 const followingButton = document.getElementById('showFollowing');

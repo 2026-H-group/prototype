@@ -229,16 +229,76 @@ document.addEventListener("DOMContentLoaded", () => {
     confirmButton.addEventListener(
         "click",
         (event) => {
+            const error = document.getElementById("buyError");
+            const fail = (message, field) => {
+                event.preventDefault();
+                error.textContent = message;
+                field?.focus();
+            };
+            error.textContent = "";
 
-            /*
-             * 実際のサイトではここで
-             * 入力内容のバリデーションや
-             * Flaskへの送信処理を行う。
-             */
+            if (selected.length === 0) {
+                fail("購入する商品を確認できません。商品一覧から選び直してください。", confirmButton);
+                return;
+            }
 
-            console.log(
-                "確認画面へ移動します"
-            );
+            const address = document.querySelector('input[name="address"]:checked');
+            if (!address) {
+                fail("配送先を選択してください。", addressRadios[0]);
+                return;
+            }
+            if (address.value === "new") {
+                const addressFields = [
+                    document.getElementById("name"),
+                    postal,
+                    document.getElementById("prefecture"),
+                    document.getElementById("address"),
+                    document.getElementById("phone")
+                ];
+                const missing = addressFields.find((field) => !field.value.trim());
+                if (missing) {
+                    fail("新しい配送先の必須項目を入力してください。", missing);
+                    return;
+                }
+                if (!/^\d{3}-?\d{4}$/.test(postal.value.trim())) {
+                    fail("郵便番号を7桁で入力してください。", postal);
+                    return;
+                }
+                const phoneDigits = document.getElementById("phone").value.replace(/\D/g, "");
+                if (![10, 11].includes(phoneDigits.length)) {
+                    fail("電話番号を10桁または11桁で入力してください。", document.getElementById("phone"));
+                    return;
+                }
+            }
+
+            const payment = document.querySelector('input[name="payment"]:checked');
+            if (!payment) {
+                fail("支払い方法を選択してください。", paymentRadios[0]);
+                return;
+            }
+            if (payment.value === "credit") {
+                const cardDigits = cardNumber.value.replace(/\D/g, "");
+                if (cardDigits.length !== 16) {
+                    fail("カード番号を16桁で入力してください。", cardNumber);
+                    return;
+                }
+                const expiry = document.getElementById("expiry");
+                const expiryMatch = expiry.value.trim().match(/^(\d{1,2})\s*\/\s*(\d{2})$/);
+                if (!expiryMatch || Number(expiryMatch[1]) < 1 || Number(expiryMatch[1]) > 12) {
+                    fail("有効期限をMM / YY形式で入力してください。", expiry);
+                    return;
+                }
+                const holder = document.getElementById("holder");
+                if (!holder.value.trim()) {
+                    fail("カード名義人を入力してください。", holder);
+                    return;
+                }
+                const security = document.getElementById("security");
+                if (!/^\d{3,4}$/.test(security.value.trim())) {
+                    fail("セキュリティコードを3桁または4桁で入力してください。", security);
+                    return;
+                }
+            }
 
         }
     );

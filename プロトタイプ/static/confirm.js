@@ -14,10 +14,18 @@ const purchaseButton = document.querySelector(".purchase-action");
 const backButton = document.querySelector(".back-action");
 if (backButton) backButton.href = `buy.html?items=${ids.join(",")}`;
 if (purchaseButton) purchaseButton.href = `purchase-history.html?items=${ids.join(",")}`;
-if (purchaseButton) purchaseButton.addEventListener("click", () => {
+if (purchaseButton) purchaseButton.addEventListener("click", (event) => {
+	event.preventDefault();
+	if (selected.length === 0) {
+		window.location.href = `buy.html?items=${encodeURIComponent(ids.join(","))}`;
+		return;
+	}
 	const orders = JSON.parse(localStorage.getItem("reTailorPurchaseHistory") || "[]");
-	orders.unshift({ id: Date.now(), date: new Date().toLocaleString("ja-JP"), receipt: `RT-${Date.now()}`, items: selected, total: total + 300 });
+	const id = Date.now();
+	const order = { id, date: new Date().toLocaleString("ja-JP"), receipt: `RT-${id}`, items: selected, total: total + 300 };
+	orders.unshift(order);
 	localStorage.setItem("reTailorPurchaseHistory", JSON.stringify(orders));
 	const cart = JSON.parse(localStorage.getItem("reTailorCart") || "[]");
 	localStorage.setItem("reTailorCart", JSON.stringify(cart.filter((cartId) => !ids.includes(Number(cartId)))));
+	window.location.href = `purchase-history.html?order=${encodeURIComponent(order.id)}`;
 });

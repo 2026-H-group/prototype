@@ -19,16 +19,17 @@
             <h1>レビューを投稿</h1>
             <p class="lead">受け取った商品の感想を、次の人へ届けましょう。</p>
 
-            <section class="product-card" aria-label="レビュー対象の商品">
-                <div class="product-image" aria-label="シンプルブラックTシャツの商品画像">商品画像</div>
+            <p id="reviewProductError" class="field-error" role="alert" hidden>レビュー対象の商品を確認できません。購入履歴から対象商品を選び直してください。</p>
+            <section class="product-card" id="reviewProductPanel" aria-label="レビュー対象の商品">
+                <div class="product-image" id="reviewProductImage" role="img" aria-label="商品画像"></div>
                 <div>
                     <p class="product-label">購入した商品</p>
-                    <h2>シンプルブラックTシャツ</h2>
-                    <p class="seller">出品者：Style Market</p>
+                    <h2 id="reviewProductName"></h2>
+                    <p class="seller">出品者：<span id="reviewSeller"></span></p>
                 </div>
             </section>
 
-            <form id="reviewForm" novalidate>
+            <form id="reviewForm" novalidate hidden>
                 <fieldset class="rating-field" aria-describedby="ratingError">
                     <legend>商品の満足度 <span class="required">必須</span></legend>
                     <div class="stars" role="radiogroup" aria-label="星の数">
@@ -54,6 +55,7 @@
             </form>
         </main>
     </div>
+    <script src="../static/product-data.js"></script>
     <script src="../static/review.js"></script>
 </body>
 </html>
