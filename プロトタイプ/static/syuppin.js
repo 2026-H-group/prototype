@@ -9,7 +9,8 @@ const sampleListings = [
 ];
 const getListings = () => JSON.parse(localStorage.getItem(listingKey) || "null") || sampleListings;
 const saveListings = (items) => localStorage.setItem(listingKey, JSON.stringify(items));
-let activeStatus = "販売中";
+const requestedStatus = new URLSearchParams(window.location.search).get("status");
+let activeStatus = ["販売中", "売却済み", "下書き"].includes(requestedStatus) ? requestedStatus : "販売中";
 
 function createDetailRow(container, label, value) {
   const row = document.createElement("div");
@@ -136,6 +137,9 @@ function renderListings() {
 
 function setupListingTabs() {
   document.querySelectorAll(".tab[data-status]").forEach((tab) => {
+    const selected = tab.dataset.status === activeStatus;
+    tab.classList.toggle("active", selected);
+    tab.setAttribute("aria-pressed", String(selected));
     tab.addEventListener("click", () => {
       activeStatus = tab.dataset.status;
       document.querySelectorAll(".tab[data-status]").forEach((item) => {
@@ -182,24 +186,29 @@ function setupListingForm() {
 }
 
 function setupDraftSave() {
-  const saveDraft = document.getElementById("saveDraft");
-  if (!saveDraft) return;
-  saveDraft.addEventListener("click", () => {
+  const saveDraftButtons = document.querySelectorAll("#saveDraft, #saveDraftFooter");
+  saveDraftButtons.forEach((button) => button.addEventListener("click", () => {
+    const condition = document.querySelector('input[name="condition"]:checked');
     const listing = {
       id: `draft-${Date.now()}`,
       name: document.getElementById("listingName").value.trim() || "商品名未入力",
       category: document.getElementById("listingCategory").value,
       price: Number(document.getElementById("listingPrice").value.replace(/,/g, "")) || 0,
       status: "下書き",
+      condition: condition ? (condition.value === "new" ? "新品" : "中古") : "未選択",
       material: document.getElementById("listingMaterial").value.trim(),
       description: document.getElementById("listingDescription").value.trim(),
+      shippingMethod: document.getElementById("shippingMethod").value,
+      shippingHandling: document.getElementById("shippingHandling").value,
+      shippingCost: document.getElementById("shippingCost").value,
+      returnPolicy: document.getElementById("returnPolicy").value,
       savedAt: new Date().toISOString()
     };
     const listings = getListings();
     listings.unshift(listing);
     saveListings(listings);
-    window.location.href = "syuppin_itiran.html";
-  });
+    window.location.href = "syuppin_itiran.html?status=%E4%B8%8B%E6%9B%B8%E3%81%8D";
+  }));
 }
 
 renderListings();
