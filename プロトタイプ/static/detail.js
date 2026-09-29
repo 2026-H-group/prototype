@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const following = new Set(JSON.parse(localStorage.getItem("reTailorFollowing") || "[]"));
   const followerCounts = JSON.parse(localStorage.getItem("reTailorFollowerCounts") || "{}");
   let followerCount = followerCounts[product.seller] || 18;
-  const updateFollowButton = () => { const active = following.has(product.seller); followButton.classList.toggle("active", active); followButton.setAttribute("aria-pressed", active); followButton.textContent = active ? "フォロー中" : "フォローする"; document.getElementById("sellerFollowers").textContent = `フォロワー ${followerCount}人`; };
+  const updateFollowButton = () => { const active = following.has(product.seller); followButton.classList.toggle("active", active); followButton.setAttribute("aria-pressed", active); followButton.textContent = active ? "フォロー解除" : "フォローする"; document.getElementById("sellerFollowers").textContent = `フォロワー ${followerCount}人`; };
   updateFollowButton();
   followButton.addEventListener("click", () => { const active = following.has(product.seller); active ? (following.delete(product.seller), followerCount = Math.max(0, followerCount - 1)) : (following.add(product.seller), followerCount += 1); followerCounts[product.seller] = followerCount; localStorage.setItem("reTailorFollowing", JSON.stringify([...following])); localStorage.setItem("reTailorFollowerCounts", JSON.stringify(followerCounts)); updateFollowButton(); });
 });
