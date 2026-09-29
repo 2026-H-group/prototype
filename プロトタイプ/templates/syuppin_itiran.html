@@ -18,51 +18,12 @@
 
     <div class="page">
       <div class="tabs">
-        <button class="tab active">販売中</button>
-        <button class="tab">売却済み</button>
-        <button class="tab">下書き</button>
+        <button class="tab active" type="button" data-status="販売中" aria-pressed="true">販売中</button>
+        <button class="tab" type="button" data-status="売却済み" aria-pressed="false">売却済み</button>
+        <button class="tab" type="button" data-status="下書き" aria-pressed="false">下書き</button>
       </div>
 
-      <div class="list" id="listingList">
-        <div class="card">
-          <div class="card-img empty"></div>
-          <div class="card-body">
-            <div class="card-name">ヴィンテージデニムジャケット</div>
-            <div class="card-price">￥8,900</div>
-            <span class="card-status">販売中</span>
-            <div class="card-actions">
-              <a class="btn-edit" href="naiyouhensyuu.html">編集</a>
-              <a class="btn-withdraw" href="torisage.html">取り下げ</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-img empty"></div>
-          <div class="card-body">
-            <div class="card-name">ハンドメイドニットセーター</div>
-            <div class="card-price">￥5,400</div>
-            <span class="card-status">販売中</span>
-            <div class="card-actions">
-              <a class="btn-edit" href="naiyouhensyuu.html">編集</a>
-              <a class="btn-withdraw" href="torisage.html">取り下げ</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-img empty"></div>
-          <div class="card-body">
-            <div class="card-name">コットンワンピース</div>
-            <div class="card-price">￥3,200</div>
-            <span class="card-status">販売中</span>
-            <div class="card-actions">
-              <a class="btn-edit" href="naiyouhensyuu.html">編集</a>
-              <a class="btn-withdraw" href="torisage.html">取り下げ</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="list" id="listingList" aria-live="polite"></div>
     </div>
   </div>
 
@@ -77,3 +38,5 @@
   </script>
 </body>
 </html>
+
+          <div class="card-img empty"></div>

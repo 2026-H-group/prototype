@@ -471,7 +471,7 @@
         padding-top: 18px;
         width: 100%;
     }
-    .btn-edit, .btn-withdraw {
+    .btn-edit, .btn-withdraw, .btn-publish {
         display: block;
         width: 100%;
         text-align: center;
@@ -485,6 +485,48 @@
     }
     .btn-edit { background: var(--olive); color: #fff; border: none; }
     .btn-withdraw { background: #fff; color: var(--olive); border: 1px solid var(--olive); }
+    .btn-publish { background: var(--olive); color: #fff; border: none; }
+    .sold-item-trigger {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+    }
+    .sold-item-trigger:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .sold-item-trigger:focus-visible, .btn-publish:focus-visible {
+        outline: 2px solid var(--olive);
+        outline-offset: 3px;
+    }
+    .sold-details {
+        display: grid;
+        gap: 0;
+        width: 100%;
+        margin: 18px 0 0;
+        border-top: 1px solid var(--border);
+        text-align: left;
+    }
+    .sold-details[hidden] { display: none; }
+    .sale-detail-row {
+        display: grid;
+        grid-template-columns: minmax(76px, 0.7fr) minmax(0, 1.3fr);
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 14px;
+    }
+    .sale-detail-row dt { color: var(--label); }
+    .sale-detail-row dd { margin: 0; overflow-wrap: anywhere; }
+    .listing-empty {
+        grid-column: 1 / -1;
+        width: 100%;
+        padding: 36px 20px;
+        border: 1px solid var(--border);
+        background: #fff;
+        color: var(--label);
+        text-align: center;
+    }
     @media (max-width: 600px) {
         .header-inner, .page { padding-left: 16px; padding-right: 16px; }
         .images { grid-template-columns: repeat(2, 1fr); }
