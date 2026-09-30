@@ -7,7 +7,8 @@
     products: "retailorAdminProducts",
     orders: "retailorAdminOrders",
     notices: "retailorAdminNotices",
-    categories: "retailorAdminCategories"
+    categories: "retailorAdminCategories",
+    contacts: "retailorAdminContacts"
   };
   const seedData = {
     members: [
@@ -40,7 +41,8 @@
       { id: "C-03", name: "ボトムス" }, { id: "C-04", name: "ワンピース" },
       { id: "C-05", name: "シューズ" }, { id: "C-06", name: "バッグ" },
       { id: "C-07", name: "アクセサリー" }, { id: "C-08", name: "その他" }
-    ]
+    ],
+    contacts: []
   };
   const page = document.body.dataset.page;
 
@@ -76,7 +78,7 @@
 
   function statusCell(row, value) {
     const target = document.createElement("td");
-    const status = text("span", value, `status${value === "停止中" || value === "審査中" || value === "支払待ち" ? " status-warn" : value === "取引完了" ? " status-muted" : ""}`);
+    const status = text("span", value, `status${value === "停止中" || value === "審査中" || value === "支払待ち" || value === "未対応" ? " status-warn" : value === "取引完了" ? " status-muted" : ""}`);
     target.append(status);
     row.append(target);
   }
@@ -110,7 +112,7 @@
   }
 
   function activateNavigation() {
-    const section = page.startsWith("member") ? "members" : page.startsWith("product") ? "products" : page.startsWith("order") ? "orders" : page.startsWith("notice") ? "notices" : page.startsWith("category") ? "categories" : "dashboard";
+    const section = page.startsWith("member") ? "members" : page.startsWith("product") ? "products" : page.startsWith("order") ? "orders" : page.startsWith("notice") ? "notices" : page.startsWith("category") ? "categories" : page.startsWith("contact") ? "contacts" : "dashboard";
     document.querySelectorAll("[data-admin-nav]").forEach((item) => {
       if (item.dataset.adminNav === section) item.setAttribute("aria-current", "page");
     });
@@ -154,7 +156,7 @@
     const members = load("members");
     const products = load("products");
     const orders = load("orders");
-    const counters = { members: members.length, products: products.length, orders: orders.length };
+    const counters = { members: members.length, products: products.length, orders: orders.length, contacts: load("contacts").length };
     Object.entries(counters).forEach(([key, value]) => {
       const target = document.querySelector(`[data-count="${key}"]`);
       if (target) target.textContent = value.toLocaleString("ja-JP");
@@ -299,6 +301,65 @@
     });
   }
 
+  function formatContactDate(value) {
+    return value ? new Date(value).toLocaleString("ja-JP") : "-";
+  }
+
+  function renderContacts() {
+    const contacts = load("contacts");
+    const search = document.querySelector("[data-search='contacts']");
+    const statusFilter = document.querySelector("[data-contact-status-filter]");
+    const render = () => {
+      const query = (search?.value || "").trim().toLowerCase();
+      fillTable("[data-table='contacts']", contacts.filter((item) =>
+        (!statusFilter?.value || item.status === statusFilter.value) &&
+        `${item.id} ${item.name} ${item.email} ${item.reference || ""}`.toLowerCase().includes(query)
+      ), (item) => {
+        const row = document.createElement("tr");
+        cell(row, item.id);
+        cell(row, formatContactDate(item.received));
+        const name = document.createElement("td");
+        name.append(text("strong", item.name, "table-primary"), text("span", item.email, "table-secondary"));
+        row.append(name);
+        cell(row, item.category);
+        cell(row, item.reference || "-", "wrap-cell");
+        statusCell(row, item.status);
+        actionCell(row, [link("詳細", `contact-detail.html?id=${encodeURIComponent(item.id)}`)]);
+        return row;
+      });
+    };
+    search?.addEventListener("input", render);
+    statusFilter?.addEventListener("change", render);
+    render();
+  }
+
+  function setupContactDetail() {
+    const recordId = new URLSearchParams(window.location.search).get("id");
+    const contacts = load("contacts");
+    const record = contacts.find((item) => item.id === recordId);
+    const missing = document.querySelector("[data-not-found]");
+    const statusForm = document.getElementById("contactStatusForm");
+    if (!record) {
+      if (missing) missing.hidden = false;
+      document.querySelectorAll("[data-record-content]").forEach((element) => { element.hidden = true; });
+      return;
+    }
+    const fields = { id: "[data-field='id']", received: "[data-field='received']", name: "[data-field='name']", email: "[data-field='email']", category: "[data-field='category']", reference: "[data-field='reference']", message: "[data-field='message']", status: "[data-field='status']" };
+    Object.entries(fields).forEach(([key, selector]) => {
+      const target = document.querySelector(selector);
+      if (target) target.textContent = key === "received" ? formatContactDate(record[key]) : record[key] || "-";
+    });
+    const statusSelect = statusForm?.elements.namedItem("status");
+    if (statusSelect) statusSelect.value = record.status;
+    document.querySelectorAll("[data-record-content]").forEach((element) => { element.hidden = false; });
+    statusForm?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const updatedStatus = statusForm.elements.namedItem("status").value;
+      save("contacts", contacts.map((item) => item.id === recordId ? { ...item, status: updatedStatus } : item));
+      window.location.href = "contacts.html";
+    });
+  }
+
   function renderCategories() {
     fillTable("[data-table='categories']", load("categories"), (item) => {
       const row = document.createElement("tr");
@@ -419,4 +480,6 @@
   if (page === "notice-edit") setupNoticeEdit();
   if (page === "categories") renderCategories();
   if (page === "category-edit") setupCategoryEdit();
+  if (page === "contacts") renderContacts();
+  if (page === "contact-detail") setupContactDetail();
 })();

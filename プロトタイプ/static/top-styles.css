@@ -173,6 +173,10 @@ a {
     color: #fff;
 }
 
+.nav-row > .pill-group:first-child .pill {
+    white-space: nowrap;
+}
+
 .chev {
     width: 14px;
     height: 14px;
@@ -204,6 +208,7 @@ a {
     position: relative;
     flex: 1;
     max-width: 420px;
+    min-width: 0;
     margin: 0 auto;
 }
 
@@ -222,6 +227,14 @@ a {
 .search-wrap { display: block; text-decoration: none; }
 .search-placeholder { display: block; height: 40px; padding: 8px 14px 8px 40px; border: 1px solid var(--border); background: #fff; color: #777; font-size: 13px; }
 .search-wrap:hover .search-placeholder { border-color: #555; }
+.nav-balance { flex: 0 0 139px; }
+
+@media (max-width: 1180px) {
+    .nav-row { display: grid; grid-template-columns: minmax(0, 1fr); }
+    .nav-row > .pill-group:first-child { flex-wrap: wrap; justify-content: center; }
+    .nav-row > .search-wrap { width: min(100%, 420px); justify-self: center; }
+    .nav-balance { display: none; }
+}
 
 .search-wrap input:focus {
     border-color: #555;
