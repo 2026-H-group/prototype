@@ -1,17 +1,6 @@
 // About page only needs the header interactions from top-script.js —
 // there's no product grid here, so that part is left out.
 
-// ---- 男性・女性の切り替えピル ----
-function setupGenderToggle() {
-  const pills = document.querySelectorAll(".toggle-pill");
-  pills.forEach((pill) => {
-    pill.addEventListener("click", () => {
-      pills.forEach((p) => p.classList.remove("active"));
-      pill.classList.add("active");
-    });
-  });
-}
-
 // ---- モバイル用のドロワーメニュー ----
 function setupDrawer() {
   const drawer = document.getElementById("mobileDrawer");
@@ -34,6 +23,5 @@ function setupDrawer() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  setupGenderToggle();
   setupDrawer();
 });
