@@ -4,7 +4,7 @@
   --text: #222;
   --sub: #666;
   --border: #c8c8c8;
-  --accent: #333;
+  --accent: var(--rt-olive);
 }
 
 * { box-sizing: border-box; }

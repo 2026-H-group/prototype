@@ -3,111 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新規登録 | Re:Tailor</title>
     <link rel="stylesheet" href="../static/login.css">
-
-
-    <title>Sign Up - Re:Tailor</title>
+    <link rel="stylesheet" href="../static/common-base.css">
 </head>
 
 <body>
+    <a class="rt-skip-link" href="#signupForm">登録フォームへ移動</a>
 
-
-    <div class="container">
-
+    <main class="container">
         <div class="box">
+            <h1 class="logo"><a href="top-index.html">Re:Tailor</a></h1>
 
-            <h1 class="logo">
-                Re:Tailor
-            </h1>
-
-            <h2 class="welcome">
-                アカウントを作成
-            </h2>
-
-            <p class="description">
-                情報を入力してアカウントを作成してください
-            </p>
-
-          
+            <h2 class="welcome">アカウントを作成</h2>
+            <p class="description">情報を入力してアカウントを作成してください。</p>
 
             <form id="signupForm" novalidate>
-
                 <!-- メールアドレス -->
                 <div class="input-group">
-
-                    <label for="email">
-                        Emailアドレス
-                    </label>
-
+                    <label for="email">メールアドレス</label>
                     <input
-                        type="text"
+                        type="email"
                         id="email"
                         name="emailId"
-                        value=""
-                        placeholder="Enter your email"
+                        autocomplete="email"
+                        inputmode="email"
+                        placeholder="example@mail.com"
+                        aria-describedby="signupError"
                         required
                     >
-
                 </div>
 
                 <!-- パスワード -->
                 <div class="input-group">
-
-                    <label for="password">
-                        パスワード
-                    </label>
-
+                    <label for="password">パスワード（8文字以上）</label>
                     <input
                         type="password"
                         id="password"
                         name="txtPass"
-                        placeholder="Enter your password"
+                        autocomplete="new-password"
+                        placeholder="8文字以上で入力"
+                        aria-describedby="signupError"
                         required
                     >
-
                 </div>
 
                 <!-- パスワード確認 -->
                 <div class="input-group">
-
-                    <label for="password_confirm">
-                        確認のためもう一度入力してください。
-                    </label>
-
+                    <label for="password_confirm">パスワード（確認）</label>
                     <input
                         type="password"
                         id="password_confirm"
                         name="txtPassConfirm"
-                        placeholder="Confirm your password"
+                        autocomplete="new-password"
+                        placeholder="もう一度入力"
+                        aria-describedby="signupError"
                         required
                     >
-
                 </div>
 
-                <!-- 登録 -->
-                <input
-                    type="submit"
-                    value="サインアップ"
-                    class="button"
-                >
+                <!-- 登録（主ボタン） -->
+                <button type="submit" class="button">登録する</button>
                 <p id="signupError" class="field-error" role="alert"></p>
-
             </form>
 
             <!-- ログインへ戻る -->
             <div class="login">
-
-                すでにアカウントをお持ちですか？
-
-                <a href="login.html">
-                    ログイン
-                </a>
-
+                すでにアカウントをお持ちの方は
+                <a href="login.html">ログイン</a>
             </div>
-
         </div>
-
-    </div>
+    </main>
 
     <script src="../static/auth.js"></script>
 </body>

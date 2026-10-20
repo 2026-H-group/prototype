@@ -4,7 +4,7 @@
     --text: #222;
     --sub: #666;
     --border: #c8c8c8;
-    --accent: #333;
+    --accent: var(--rt-olive);
     --soft: #ededed;
 }
 
@@ -32,11 +32,16 @@ h1 { margin: 13px 0 8px; font-size: 30px; line-height: 1.35; }
 .stars { color: #222; letter-spacing: 2px; }
 .rating-line span:last-child { color: var(--sub); }
 .price { margin: 0; font-size: 28px; font-weight: 700; }
-.action-row { display: flex; gap: 10px; margin: 25px 0 12px; }
-.primary-button, .favorite-button { min-height: 46px; padding: 9px 18px; border: 1px solid var(--accent); }
-.primary-button { flex: 1; background: var(--accent); color: var(--white); font-weight: 700; }
-.favorite-button { background: var(--white); }
-.favorite-button.active { background: #e8e8e8; }
+/* 操作ボタン: お気に入り / カートに追加 / 購入手続きへ（主ボタンは「購入手続きへ」の1つだけ） */
+.action-row { display: flex; gap: 10px; margin: 25px 0 8px; }
+.primary-button, .favorite-button, .cart-button { min-height: 46px; padding: 9px 18px; border: 1px solid var(--rt-olive); border-radius: var(--rt-radius); }
+.primary-button { flex: 1; background: var(--rt-olive); color: var(--white); font-weight: 700; }
+.primary-button:hover { background: var(--rt-olive-dark); }
+.favorite-button, .cart-button { flex: 0 0 auto; background: var(--white); color: var(--rt-olive); font-weight: 700; }
+.favorite-button:hover, .cart-button:hover { background: var(--rt-olive-soft); }
+.favorite-button.active { background: var(--rt-olive-soft); }
+.cart-status { min-height: 22px; margin: 0 0 6px; color: var(--rt-olive); font-size: 13px; font-weight: 700; }
+.cart-status a { color: inherit; }
 .notice { margin: 0; color: var(--sub); font-size: 12px; }
 .content-section { margin-top: 32px; padding: 26px; background: var(--white); border: 1px solid var(--border); }
 h2 { margin: 0 0 20px; font-size: 21px; }
@@ -67,4 +72,7 @@ h3 { margin: 25px 0 8px; font-size: 16px; }
 .review-meta { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
 .review-meta strong { margin-right: 10px; }
 .review-item p { margin: 6px 0 0; font-size: 14px; }
-@media (max-width: 680px) { .site-header { padding: 0 16px; } .brand { font-size: 20px; } .page-shell { padding: 28px 14px 55px; } .detail-layout { grid-template-columns: 1fr; gap: 22px; } h1 { font-size: 25px; } .content-section { padding: 20px 16px; } .detail-list { grid-template-columns: 1fr; } .action-row { flex-direction: column; } .seller-card { align-items: flex-start; flex-wrap: wrap; } .follow-button { margin-left: 66px; } }
+@media (max-width: 680px) { .site-header { padding: 0 16px; } .brand { font-size: 20px; } .page-shell { padding: 28px 14px 55px; } .detail-layout { grid-template-columns: 1fr; gap: 22px; } h1 { font-size: 25px; } .content-section { padding: 20px 16px; } .detail-list { grid-template-columns: 1fr; } .action-row { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; margin: 0; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); background: var(--white); border-top: 1px solid var(--border); box-shadow: 0 -2px 8px rgba(0, 0, 0, .08); } .favorite-button, .cart-button { padding: 9px 12px; font-size: 13px; } .primary-button { padding: 9px 10px; font-size: 14px; } body { padding-bottom: 76px; } .seller-card { align-items: flex-start; flex-wrap: wrap; } .follow-button { margin-left: 66px; } }
+
+/* 中くらいの幅（タブレット）では、購入手続きボタンを下の段に広げて、潰れないようにする */
+@media (min-width: 681px) and (max-width: 1100px) { .action-row { flex-wrap: wrap; } .primary-button { flex: 1 1 100%; order: 3; } .favorite-button, .cart-button { flex: 1 1 0; } }

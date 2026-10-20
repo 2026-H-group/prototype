@@ -4,7 +4,7 @@
   --ink: #252525;
   --muted: #777;
   --line: #d7d7d0;
-  --olive: #65705a;
+  --olive: var(--rt-olive);
 }
 
 * { box-sizing: border-box; }

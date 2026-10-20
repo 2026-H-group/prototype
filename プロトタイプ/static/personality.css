@@ -1,4 +1,4 @@
-:root { --bg:#f4f4f4; --white:#fff; --text:#222; --sub:#666; --line:#c8c8c8; --accent:#333; --soft:#e9e5df; }
+:root { --bg:#f4f4f4; --white:#fff; --text:#222; --sub:#666; --line:#c8c8c8; --accent:var(--rt-olive); --soft:#e9e5df; }
 * { box-sizing:border-box; }
 body { margin:0; background:var(--bg); color:var(--text); font-family:Arial,"Yu Gothic","Meiryo",sans-serif; line-height:1.7; }
 button,a { font:inherit; } button { cursor:pointer; }

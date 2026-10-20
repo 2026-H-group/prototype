@@ -4,7 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="../static/syuppin.css">
-<title>出品内容編集</title>
+<title>出品内容編集 | Re:Tailor</title>
+    <link rel="stylesheet" href="../static/common-base.css">
     <link rel="stylesheet" href="../static/common-footer.css">
     <script src="../static/common-footer.js" defer></script>
 </head>
@@ -14,7 +15,7 @@
       <div class="header-inner">
         <a class="back-btn" href="syuppin_itiran.html" title="戻る（出品一覧へ）">←</a>
         <div class="header-title">出品内容編集</div>
-        <button class="save-btn">保存</button>
+        <button class="save-btn" id="editSubmitTop" type="button">保存</button>
       </div>
     </div>
 
@@ -23,20 +24,20 @@
         <div class="field">
           <div class="field-label">商品画像</div>
           <div class="images">
-            <div class="img-box empty"></div>
-            <div class="img-box empty"></div>
-            <div class="img-box empty"></div>
-            <div class="add-box" title="画像追加">+</div>
+            <div class="img-box empty" aria-hidden="true"></div>
+            <div class="img-box empty" aria-hidden="true"></div>
+            <div class="img-box empty" aria-hidden="true"></div>
+            <button class="add-box" type="button" aria-label="画像を追加（プロトタイプでは未対応）">+</button>
           </div>
         </div>
 
         <div class="field">
-          <div class="field-label">商品名</div>
-          <input id="editName" type="text" maxlength="20" placeholder="商品名を入力" />
+          <label class="field-label" for="editName">商品名</label>
+          <input id="editName" type="text" maxlength="20" autocomplete="off" aria-required="true" placeholder="商品名を入力" />
         </div>
 
         <div class="field">
-          <div class="field-label">カテゴリ</div>
+          <label class="field-label" for="editCategory">カテゴリ</label>
           <div class="select-wrap">
             <select id="editCategory">
               <option value="" selected disabled hidden>カテゴリを選択</option>
@@ -53,37 +54,37 @@
         </div>
 
         <div class="field">
-          <div class="field-label">価格</div>
-          <input id="editPrice" type="text" inputmode="numeric" maxlength="5" placeholder="￥価格を入力" />
+          <label class="field-label" for="editPrice">価格</label>
+          <input id="editPrice" type="text" inputmode="numeric" maxlength="5" autocomplete="off" aria-required="true" placeholder="￥価格を入力" />
         </div>
 
         <div class="field">
-          <div class="field-label">状態記入欄</div>
+          <div class="field-label" id="conditionLabel">状態記入欄</div>
           <div class="condition-box">
-            <div class="radios">
+            <div class="radios" role="radiogroup" aria-labelledby="conditionLabel">
               <label><input type="radio" name="condition" value="new" /> 新品</label>
               <label><input type="radio" name="condition" value="used" /> 中古</label>
             </div>
             <div class="material-row">
-              素材：
+              <label for="editMaterial">素材：</label>
               <input id="editMaterial" type="text" maxlength="20" placeholder="素材を入力（例：コットン）" />
             </div>
           </div>
         </div>
 
         <div class="field">
-          <div class="field-label">その他詳細</div>
+          <label class="field-label" for="editDescription">その他詳細</label>
           <textarea id="editDescription" rows="5" maxlength="225" placeholder="汚れや傷の有無"></textarea>
         </div>
       </div>
 
+      <p id="editError" class="form-error" role="alert"></p>
       <div class="footer">
         <a class="withdraw-link" href="torisage.html">出品を取り下げる</a>
         <button id="editSubmit" class="update-btn" type="button">更新する</button>
       </div>
     </div>
   </div>
-</body>
   <script src="../static/edit-listing.js"></script>
 </body>
 </html>

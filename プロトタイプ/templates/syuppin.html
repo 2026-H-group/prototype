@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="../static/syuppin.css">
 
-<title>出品</title>
+<title>出品 | Re:Tailor</title>
+    <link rel="stylesheet" href="../static/common-base.css">
     <link rel="stylesheet" href="../static/common-footer.css">
     <script src="../static/common-footer.js" defer></script>
 </head>
@@ -24,22 +25,22 @@
         <div class="field">
           <div class="field-label">商品画像<span class="optional">任意</span></div>
           <div class="images">
-            <div class="img-box empty"></div>
-            <div class="img-box empty"></div>
-            <div class="img-box empty"></div>
-            <div class="add-box" title="画像追加">+</div>
+            <div class="img-box empty" aria-hidden="true"></div>
+            <div class="img-box empty" aria-hidden="true"></div>
+            <div class="img-box empty" aria-hidden="true"></div>
+            <button class="add-box" type="button" aria-label="画像を追加（プロトタイプでは未対応）">+</button>
           </div>
         </div>
 
         <div class="field">
-          <div class="field-label">商品名<span class="required">必須</span></div>
-          <input id="listingName" name="name" type="text" maxlength="20" placeholder="商品名を入力" />
+          <label class="field-label" for="listingName">商品名<span class="required">必須</span></label>
+          <input id="listingName" name="name" type="text" maxlength="20" autocomplete="off" aria-required="true" placeholder="商品名を入力" />
         </div>
 
         <div class="field">
-          <div class="field-label">カテゴリ<span class="required">必須</span></div>
+          <label class="field-label" for="listingCategory">カテゴリ<span class="required">必須</span></label>
           <div class="select-wrap">
-            <select id="listingCategory" name="category">
+            <select id="listingCategory" name="category" aria-required="true">
               <option value="" selected disabled hidden>カテゴリを選択</option>
               <option>トップス</option>
               <option>アウター</option>
@@ -54,26 +55,26 @@
         </div>
 
         <div class="field">
-          <div class="field-label">価格<span class="required">必須</span></div>
-          <input id="listingPrice" name="price" type="text" inputmode="numeric" maxlength="5" placeholder="￥価格を入力" />
+          <label class="field-label" for="listingPrice">価格<span class="required">必須</span></label>
+          <input id="listingPrice" name="price" type="text" inputmode="numeric" maxlength="5" autocomplete="off" aria-required="true" placeholder="￥価格を入力" />
         </div>
 
         <div class="field">
-          <div class="field-label">状態記入欄<span class="required">必須</span></div>
+          <div class="field-label" id="conditionLabel">状態記入欄<span class="required">必須</span></div>
           <div class="condition-box">
-            <div class="radios">
+            <div class="radios" role="radiogroup" aria-labelledby="conditionLabel">
               <label><input type="radio" name="condition" value="new" /> 新品</label>
               <label><input type="radio" name="condition" value="used" /> 中古</label>
             </div>
             <div class="material-row">
-              素材：<span class="optional">任意</span>
+              <label for="listingMaterial">素材：<span class="optional">任意</span></label>
               <input id="listingMaterial" name="material" type="text" maxlength="20" placeholder="素材を入力（例：コットン）" />
             </div>
           </div>
         </div>
 
         <div class="field">
-          <div class="field-label">その他詳細<span class="optional">任意</span></div>
+          <label class="field-label" for="listingDescription">その他詳細<span class="optional">任意</span></label>
           <textarea id="listingDescription" name="description" rows="5" maxlength="225" placeholder="汚れや傷の有無"></textarea>
         </div>
 
@@ -92,7 +93,7 @@
         </div>
       </div>
 
-      <p id="listingError" class="required" role="alert"></p>
+      <p id="listingError" class="form-error" role="alert"></p>
       <div class="footer">
         <button id="saveDraftFooter" class="draft-submit-btn" type="button">下書きに保存</button>
         <a id="listingSubmit" class="submit-btn" href="syuppin_complete.html">出品を確定する</a>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ユーザー設定 | Re:Tailor</title>
+  <link rel="stylesheet" href="../static/settings.css">
+  <link rel="stylesheet" href="../static/common-base.css">
+  <link rel="stylesheet" href="../static/common-footer.css">
+  <script src="../static/common-footer.js" defer></script>
+</head>
+<body>
+  <a class="rt-skip-link" href="#main">本文へ移動</a>
+  <header class="topbar">
+    <a href="my-page.html" class="back-link" aria-label="マイページへ戻る">←</a>
+    <a href="top-index.html" class="brand">Re:Tailor</a>
+    <span aria-hidden="true"></span>
+  </header>
+
+  <main id="main" class="page-shell">
+    <p class="eyebrow">SETTINGS</p>
+    <h1>ユーザー設定</h1>
+    <p class="lead">アカウントや通知など、Re:Tailorの使い方を設定できます。変更は自動で保存されます。</p>
+
+    <section class="panel" aria-labelledby="accountTitle">
+      <h2 id="accountTitle">アカウント</h2>
+      <ul class="link-list">
+        <li><a href="member-profile.html"><span>会員情報</span><span class="hint">氏名・住所・連絡先</span></a></li>
+        <li><a href="password.html"><span>パスワード変更</span><span class="hint">定期的な変更をおすすめします</span></a></li>
+        <li><a href="identity-verification.html"><span>本人確認</span><span class="hint">安心して取引するための確認</span></a></li>
+        <li><a href="billing-portal.html"><span>お支払い方法</span><span class="hint">カード情報の確認・変更</span></a></li>
+      </ul>
+    </section>
+
+    <section class="panel" aria-labelledby="notifyTitle">
+      <h2 id="notifyTitle">通知</h2>
+      <ul class="switch-list">
+        <li>
+          <label class="switch-row" for="notifyOrder">
+            <span class="switch-text"><strong>注文・配送のお知らせ</strong><span class="hint">購入や発送の状況をお知らせします</span></span>
+            <input class="switch" type="checkbox" id="notifyOrder" data-setting="notifyOrder" role="switch">
+          </label>
+        </li>
+        <li>
+          <label class="switch-row" for="notifyPrice">
+            <span class="switch-text"><strong>お気に入り商品の値下げ</strong><span class="hint">お気に入りの商品が値下げされたときに通知</span></span>
+            <input class="switch" type="checkbox" id="notifyPrice" data-setting="notifyPrice" role="switch">
+          </label>
+        </li>
+        <li>
+          <label class="switch-row" for="notifyFollow">
+            <span class="switch-text"><strong>フォロー中の出品者の新着</strong><span class="hint">フォローしている出品者が出品したときに通知</span></span>
+            <input class="switch" type="checkbox" id="notifyFollow" data-setting="notifyFollow" role="switch">
+          </label>
+        </li>
+        <li>
+          <label class="switch-row" for="notifyNews">
+            <span class="switch-text"><strong>運営からのお知らせ</strong><span class="hint">メンテナンスやキャンペーンの情報</span></span>
+            <input class="switch" type="checkbox" id="notifyNews" data-setting="notifyNews" role="switch">
+          </label>
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel" aria-labelledby="privacyTitle">
+      <h2 id="privacyTitle">プライバシー・表示</h2>
+      <ul class="switch-list">
+        <li>
+          <label class="switch-row" for="publicProfile">
+            <span class="switch-text"><strong>プロフィールを公開する</strong><span class="hint">オフにすると、他のユーザーにはユーザー名のみ表示されます</span></span>
+            <input class="switch" type="checkbox" id="publicProfile" data-setting="publicProfile" role="switch">
+          </label>
+        </li>
+      </ul>
+      <div class="select-row">
+        <label for="language">表示言語</label>
+        <select id="language" data-setting="language">
+          <option value="ja">日本語</option>
+        </select>
+        <p class="hint">現在は日本語のみ対応しています。</p>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="supportTitle">
+      <h2 id="supportTitle">サポート</h2>
+      <ul class="link-list">
+        <li><a href="help.html"><span>ヘルプ・よくある質問</span><span class="hint">使い方を調べる</span></a></li>
+        <li><a href="contact.html"><span>お問い合わせ</span><span class="hint">運営へ連絡する</span></a></li>
+        <li><a href="notification.html"><span>お知らせ</span><span class="hint">運営からのお知らせ一覧</span></a></li>
+      </ul>
+    </section>
+
+    <section class="panel" aria-labelledby="sessionTitle">
+      <h2 id="sessionTitle">ログアウト・退会</h2>
+      <div class="action-row">
+        <button type="button" class="btn btn--ghost" id="logoutButton">ログアウト</button>
+        <button type="button" class="btn btn--danger-ghost" id="withdrawOpen" aria-expanded="false" aria-controls="withdrawPanel">退会する</button>
+      </div>
+
+      <div id="withdrawPanel" class="withdraw-panel" role="alertdialog" aria-labelledby="withdrawTitle" aria-describedby="withdrawText" hidden>
+        <h3 id="withdrawTitle">本当に退会しますか？</h3>
+        <p id="withdrawText">退会すると、会員情報・購入履歴・お気に入りなどが利用できなくなります。（プロトタイプでは、このブラウザーに保存された情報が削除されます。）</p>
+        <div class="action-row">
+          <button type="button" class="btn btn--ghost" id="withdrawCancel">キャンセル</button>
+          <button type="button" class="btn btn--danger" id="withdrawConfirm">退会する</button>
+        </div>
+      </div>
+    </section>
+
+    <p id="settingsStatus" class="status" role="status" aria-live="polite"></p>
+  </main>
+  <script src="../static/settings.js"></script>
+</body>
+</html>

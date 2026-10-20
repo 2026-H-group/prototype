@@ -21,7 +21,7 @@ function renderProduct(product) {
   const sellerUrl = `seller.html?seller=${encodeURIComponent(product.seller)}&fromProduct=${product.id}`;
   document.getElementById("sellerName").href = sellerUrl;
   document.getElementById("sellerProfileLink").href = sellerUrl;
-  setText("productPrice", `¥${product.price.toLocaleString()}`); setText("listedAt", product.listedAt); setText("productRating", "★★★★★"); setText("ratingText", product.rating); setText("reviewCount", `(${product.reviews}件)`); setText("productImage", product.image);
+  setText("productPrice", `¥${product.price.toLocaleString()}`); setText("listedAt", product.listedAt); setText("productRating", "★★★★★"); document.getElementById("productRating").setAttribute("aria-label", `評価 ${product.rating} / 5`); setText("ratingText", product.rating); setText("reviewCount", `(${product.reviews}件)`); setText("productImage", product.image);
   setText("detailType", product.type);
   ["condition", "brand", "size", "color", "material", "purchaseDate", "shipping", "handling", "description"].forEach((key) => setText(key, product[key]));
   setText("sellerInitial", product.seller.slice(0, 1).toUpperCase()); setText("sellerRating", product.sellerRating); setText("sellerSales", product.sales);
@@ -38,6 +38,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const isFavorite = favorites.has(Number(productId));
   favoriteButton.classList.toggle("active", isFavorite); favoriteButton.setAttribute("aria-pressed", isFavorite); favoriteButton.textContent = isFavorite ? "♥ お気に入り済み" : "♡ お気に入り";
   document.getElementById("buyButton").addEventListener("click", () => { location.href = `buy.html?items=${productId}`; });
+  // カートに追加（トップ画面と同じ reTailorCart に商品IDを保存する）
+  const cartButton = document.getElementById("cartButton");
+  const cartStatus = document.getElementById("cartStatus");
+  const readCart = () => JSON.parse(localStorage.getItem("reTailorCart") || "[]").map(Number);
+  const showInCart = () => { cartButton.textContent = "カートを見る"; cartStatus.innerHTML = 'この商品はカートに入っています。<a href="cart.html">カートへ進む</a>'; };
+  if (readCart().includes(Number(productId))) showInCart();
+  cartButton.addEventListener("click", () => {
+    const cart = readCart();
+    if (cart.includes(Number(productId))) { location.href = "cart.html"; return; }
+    cart.push(Number(productId));
+    localStorage.setItem("reTailorCart", JSON.stringify(cart));
+    showInCart();
+    cartStatus.firstChild.textContent = "カートに追加しました。";
+  });
   favoriteButton.addEventListener("click", (event) => { const button = event.currentTarget; const active = button.classList.toggle("active"); button.setAttribute("aria-pressed", active); button.textContent = active ? "♥ お気に入り済み" : "♡ お気に入り"; active ? favorites.add(Number(productId)) : favorites.delete(Number(productId)); localStorage.setItem("reTailorFavorites", JSON.stringify([...favorites])); });
   const followButton = document.getElementById("followButton");
   const following = new Set(JSON.parse(localStorage.getItem("reTailorFollowing") || "[]"));

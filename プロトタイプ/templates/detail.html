@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>商品詳細 | Re:Tailor</title>
     <link rel="stylesheet" href="../static/detail.css">
+    <link rel="stylesheet" href="../static/common-base.css">
     <link rel="stylesheet" href="../static/common-footer.css">
     <script src="../static/common-footer.js" defer></script>
 </head>
@@ -28,7 +29,12 @@
                 <div class="rating-line"><span class="stars" id="productRating" aria-label="評価"></span><strong id="ratingText"></strong><span id="reviewCount"></span></div>
                 <p class="price" id="productPrice"></p>
                 <p class="stock">在庫：1点のみ　　出品日：<span id="listedAt"></span></p>
-                <div class="action-row"><button class="primary-button" id="buyButton" type="button">購入手続きへ</button><button class="favorite-button" id="favoriteButton" type="button" aria-pressed="false">♡ お気に入り</button></div>
+                <div class="action-row" role="group" aria-label="購入の操作">
+                    <button class="favorite-button" id="favoriteButton" type="button" aria-pressed="false">♡ お気に入り</button>
+                    <button class="cart-button" id="cartButton" type="button">カートに追加</button>
+                    <button class="primary-button" id="buyButton" type="button">購入手続きへ</button>
+                </div>
+                <p class="cart-status" id="cartStatus" role="status" aria-live="polite"></p>
                 <p class="notice">購入前に商品の状態・サイズ・配送情報をご確認ください。</p>
             </div>
         </section>

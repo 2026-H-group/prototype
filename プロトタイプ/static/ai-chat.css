@@ -1,4 +1,4 @@
-:root{--ink:#262923;--olive:#43564a;--sage:#dce5dd;--paper:#f5f4ef;--line:#dedfd8;--muted:#73766f;--white:#fff}
+:root{--ink:#262923;--olive:var(--rt-olive);--sage:#dce5dd;--paper:#f5f4ef;--line:#dedfd8;--muted:#73766f;--white:#fff}
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:"Yu Gothic","Meiryo",sans-serif;line-height:1.65}
 button,input{font:inherit}

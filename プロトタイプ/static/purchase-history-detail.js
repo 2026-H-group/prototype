@@ -32,6 +32,17 @@ if (!order || !item) {
 	document.getElementById("receipt").textContent = order.receipt || "記録なし";
 	document.getElementById("subtotal").textContent = yen(item.price);
 	document.getElementById("total").textContent = yen(order.total);
+	// 配送先・支払い・配送方法は、これらを保存する前の古い注文には記録がないため、ある場合だけ表示する
+	const optionalRows = [
+		["shippingFeeRow", "shippingFee", order.shipping ? yen(order.shipping.fee) : ""],
+		["shippingMethodRow", "shippingMethod", order.shipping?.label || ""],
+		["paymentRow", "paymentMethod", order.payment ? `${order.payment.label}${order.payment.last4 ? `（**** ${order.payment.last4}）` : ""}` : ""],
+		["deliverRow", "deliverTo", order.deliver ? `${order.deliver.name}　${order.deliver.text}` : ""]
+	];
+	optionalRows.forEach(([rowId, valueId, value]) => {
+		document.getElementById(rowId).hidden = !value;
+		document.getElementById(valueId).textContent = value;
+	});
 	const query = `order=${encodeURIComponent(order.id)}&product=${encodeURIComponent(item.id)}`;
 	document.getElementById("reviewLink").href = `review.html?${query}`;
 	document.getElementById("coordinateLink").href = `coordinate_shindan.html?item=${encodeURIComponent(item.id)}&order=${encodeURIComponent(order.id)}`;

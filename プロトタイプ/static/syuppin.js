@@ -160,12 +160,20 @@ function setupListingForm() {
     const category = document.getElementById("listingCategory").value;
     const price = Number(document.getElementById("listingPrice").value.replace(/,/g, ""));
     const error = document.getElementById("listingError");
-    if (!name || !category || !price || price < 1) {
-      event.preventDefault();
+    event.preventDefault();
+    const checks = [
+      [document.getElementById("listingName"), !name],
+      [document.getElementById("listingCategory"), !category],
+      [document.getElementById("listingPrice"), !(price >= 1)]
+    ];
+    checks.forEach(([field, bad]) => field.setAttribute("aria-invalid", String(bad)));
+    const firstBad = checks.find(([, bad]) => bad);
+    if (firstBad) {
       error.textContent = "商品名、カテゴリ、価格を入力してください。";
+      firstBad[0].focus();
       return;
     }
-    event.preventDefault();
+    error.textContent = "";
     const condition = document.querySelector('input[name="condition"]:checked');
     const listing = {
       id: Date.now(), name, category, price, status: "販売中",

@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>購入手続き</title>
+    <title>購入手続き | Re:Tailor</title>
 
     <link rel="stylesheet" href="../static/buy-style.css">
+    <link rel="stylesheet" href="../static/common-base.css">
     <link rel="stylesheet" href="../static/common-footer.css">
     <script src="../static/common-footer.js" defer></script>
 </head>
@@ -23,6 +24,8 @@
         </a>
 
         <h1>購入手続き</h1>
+
+        <a href="top-index.html" class="topbar-brand">Re:Tailor</a>
     </header>
 
 
@@ -105,6 +108,7 @@
 
                                 <input
                                     id="name"
+                                    autocomplete="name"
                                     type="text"
                                     placeholder="山田 太郎"
                                 >
@@ -118,6 +122,7 @@
 
                                 <input
                                     id="postal"
+                                    autocomplete="postal-code"
                                     type="text"
                                     placeholder="150-0001"
                                 >
@@ -166,6 +171,7 @@
 
                                 <input
                                     id="address"
+                                    autocomplete="street-address"
                                     type="text"
                                     placeholder="渋谷区神南1-1-1"
                                 >
@@ -180,6 +186,7 @@
 
                                 <input
                                     id="building"
+                                    autocomplete="address-line2"
                                     type="text"
                                     placeholder="○○マンション101号室"
                                 >
@@ -193,6 +200,7 @@
 
                                 <input
                                     id="phone"
+                                    autocomplete="tel"
                                     type="tel"
                                     placeholder="090-1234-5678"
                                 >
@@ -285,6 +293,7 @@
 
                             <input
                                 id="card-number"
+                                    autocomplete="cc-number"
                                 type="text"
                                 placeholder="1234 5678 9012 3456"
                             >
@@ -300,6 +309,7 @@
 
                             <input
                                 id="expiry"
+                                    autocomplete="cc-exp"
                                 type="text"
                                 placeholder="MM / YY"
                             >
@@ -315,6 +325,7 @@
 
                             <input
                                 id="holder"
+                                    autocomplete="cc-name"
                                 type="text"
                                 placeholder="YAMADA TARO"
                             >
@@ -330,6 +341,7 @@
 
                             <input
                                 id="security"
+                                    autocomplete="cc-csc"
                                 type="password"
                                 placeholder="123"
                             >
@@ -360,11 +372,13 @@
                             type="radio"
                             name="shipping"
                             value="mercari"
+                            data-fee="210"
+                            data-label="メルカリ便"
                             checked
                         >
 
                         <span>
-                            <strong>メルカリ便</strong>
+                            <strong>メルカリ便（送料 ¥210）</strong>
                             <small>匿名配送対応</small>
                         </span>
 
@@ -377,10 +391,12 @@
                             type="radio"
                             name="shipping"
                             value="yupack"
+                            data-fee="600"
+                            data-label="ゆうパック"
                         >
 
                         <span>
-                            <strong>ゆうパック</strong>
+                            <strong>ゆうパック（送料 ¥600）</strong>
                             <small>日本郵便による配送</small>
                         </span>
 
@@ -410,51 +426,7 @@
                 </div>
 
 
-                <div class="product-row">
-
-                    <div class="product-image">
-                        商品画像
-                    </div>
-
-
-                    <div class="product-info">
-
-                        <h3 id="buyProductName">
-                            シンプルブラックTシャツ
-                        </h3>
-
-                        <p class="seller">
-                            出品者：Style Market
-                        </p>
-
-
-                        <dl>
-
-                            <div>
-                                <dt>カラー</dt>
-                                <dd>ブラック</dd>
-                            </div>
-
-                            <div>
-                                <dt>サイズ</dt>
-                                <dd>M</dd>
-                            </div>
-
-                            <div>
-                                <dt>数量</dt>
-                                <dd>1</dd>
-                            </div>
-
-                        </dl>
-
-
-                        <p class="product-price">
-                            ¥3,980
-                        </p>
-
-                    </div>
-
-                </div>
+                <div id="buyItems" class="buy-items" aria-live="polite"></div>
 
             </section>
 
@@ -469,13 +441,13 @@
 
                     <div>
                         <span>商品価格</span>
-                        <strong>¥3,980</strong>
+                        <strong id="summarySubtotal">¥0</strong>
                     </div>
 
 
                     <div>
                         <span>送料</span>
-                        <strong>¥300</strong>
+                        <strong id="summaryShipping">¥0</strong>
                     </div>
 
 
@@ -483,8 +455,8 @@
 
                         <span>合計金額</span>
 
-                        <strong>
-                            ¥4,280
+                        <strong id="summaryTotal">
+                            ¥0
                         </strong>
 
                     </div>
@@ -492,7 +464,7 @@
                 </div>
 
 
-                <p id="buyError" class="buy-error" role="alert" aria-live="polite"></p>
+                <p id="buyError" class="buy-error" aria-hidden="true"></p>
                 <a
                     id="confirmLink"
                     href="confirm.html"

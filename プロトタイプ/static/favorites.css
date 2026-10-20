@@ -1,0 +1,77 @@
+/* お気に入り一覧：カート画面（cart.css）の見た目を土台にしている */
+.fav-item {
+  display: grid;
+  grid-template-columns: 112px 1fr auto;
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.fav-actions {
+  display: grid;
+  gap: 8px;
+  min-width: 150px;
+}
+
+.fav-button {
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid var(--rt-olive);
+  background: var(--rt-olive);
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.fav-button:hover {
+  background: var(--rt-olive-dark);
+}
+
+.fav-button--ghost {
+  background: #fff;
+  color: var(--rt-olive);
+}
+
+.fav-button--ghost:hover {
+  background: var(--rt-olive-soft);
+}
+
+.fav-button--link {
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--sub);
+  text-decoration: underline;
+  font-weight: 400;
+}
+
+.fav-button--link:hover {
+  background: transparent;
+  color: var(--error);
+}
+
+.fav-status {
+  min-height: 22px;
+  margin: 14px 0 0;
+  color: var(--rt-olive);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .fav-item {
+    grid-template-columns: 78px 1fr;
+    gap: 10px 12px;
+  }
+
+  .fav-actions {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr;
+  }
+}

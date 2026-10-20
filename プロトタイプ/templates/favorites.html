@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お気に入り一覧 | Re:Tailor</title>
+  <link rel="stylesheet" href="../static/cart.css">
+  <link rel="stylesheet" href="../static/favorites.css">
+  <link rel="stylesheet" href="../static/common-base.css">
+  <link rel="stylesheet" href="../static/common-footer.css">
+  <script src="../static/common-footer.js" defer></script>
+</head>
+<body>
+  <a class="rt-skip-link" href="#main">本文へ移動</a>
+  <header class="topbar">
+    <a href="my-page.html" class="back-link" aria-label="マイページへ戻る">←</a>
+    <a href="top-index.html" class="brand">Re:Tailor</a>
+    <a href="cart.html" class="account-link">カート</a>
+  </header>
+  <main id="main" class="page-shell">
+    <p class="eyebrow">FAVORITES</p>
+    <h1>お気に入り一覧</h1>
+    <p class="lead">お気に入りに登録した商品です。気になる商品はカートに入れて購入手続きへ進めます。</p>
+
+    <div class="cart-toolbar">
+      <span id="favoriteCount" class="cart-count" role="status"></span>
+    </div>
+
+    <div id="favoriteList" class="cart-list"></div>
+
+    <div id="favoriteEmpty" class="empty" hidden>
+      <p>お気に入りに登録した商品はまだありません。</p>
+      <a class="empty-link" href="search.html">商品を探す</a>
+    </div>
+
+    <p id="favoriteStatus" class="fav-status" role="status" aria-live="polite"></p>
+  </main>
+  <script src="../static/product-data.js"></script>
+  <script src="../static/favorites.js"></script>
+</body>
+</html>

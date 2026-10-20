@@ -10,7 +10,7 @@
     --border-dark: #333;
     --text: #222;
     --sub: #666;
-    --accent: #333;
+    --accent: var(--rt-olive);
 }
 
 * {
@@ -127,7 +127,7 @@ a {
     justify-content: center;
 
     border-radius: 50%;
-    background: #333;
+    background: var(--rt-olive);
     color: #fff;
     font-size: 11px;
 }
@@ -169,7 +169,7 @@ a {
 
 .pill:hover,
 .pill.active {
-    background: #333;
+    background: var(--rt-olive);
     color: #fff;
 }
 
@@ -319,7 +319,7 @@ a {
 
     padding: 9px 20px;
 
-    border: 1px solid #333;
+    border: 1px solid var(--rt-olive);
     text-decoration: none;
 
     font-size: 13px;
@@ -327,13 +327,13 @@ a {
 }
 
 .btn-primary {
-    background: #333;
+    background: var(--rt-olive);
     color: #fff;
 }
 
 .btn-outline {
     background: #fff;
-    color: #333;
+    color: var(--rt-olive);
 }
 
 .btn:hover {
@@ -528,7 +528,7 @@ a {
 
 .cat-pill:hover,
 .cat-pill.active {
-    background: #333;
+    background: var(--rt-olive);
     color: #fff;
 }
 

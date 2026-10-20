@@ -1,0 +1,362 @@
+/*
+ * Re:Tailor 共通デザイン（手順1）
+ *
+ * 目的: 色・文字・ボタン・入力欄・カードを全画面で同じにする。
+ * 読み込み: 画面ごとのCSSのあとに読み込む（common-footer.css の直前）。
+ *
+ * 使い方:
+ *   - 色・余白などの値は、下の --rt-* 変数を使う。画面ごとに新しい色を作らない。
+ *   - 新しい部品は rt- で始まるクラス名を使う（既存クラスと名前がぶつからない）。
+ *   - 既存の画面CSSは今のまま動く。共通化は画面ごとに少しずつ進める。
+ */
+
+:root {
+  /* 色 */
+  --rt-olive: #3f4a2e;
+  --rt-olive-dark: #2f3823;
+  --rt-olive-soft: #e9eeea;
+  --rt-ink: #222222;
+  --rt-ink-sub: #666666;
+  --rt-line: #c8c8c8;
+  --rt-line-soft: #e0e0da;
+  --rt-bg: #f4f4f4;
+  --rt-surface: #ffffff;
+  --rt-image-bg: #e9e8e3;
+  --rt-error: #a33b3b;
+  --rt-error-soft: #f8ecec;
+  --rt-success: #3f6b3a;
+  --rt-focus: #1f5fbf;
+
+  /* 文字 */
+  --rt-font-sans: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --rt-font-brand: Georgia, "Times New Roman", serif;
+
+  /* 形・余白 */
+  --rt-radius: 4px;
+  --rt-space-1: 4px;
+  --rt-space-2: 8px;
+  --rt-space-3: 12px;
+  --rt-space-4: 16px;
+  --rt-space-5: 24px;
+  --rt-space-6: 32px;
+  --rt-page-width: 1100px;
+  --rt-header-height: 72px;
+  --rt-tap-size: 44px;
+}
+
+/* ---- 全画面共通の土台 ---------------------------------------------- */
+
+/* 文字を全画面でそろえる。html body は各画面の body より優先される */
+html body {
+  font-family: var(--rt-font-sans);
+  overflow-wrap: break-word;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+}
+
+/* hidden 属性が display の指定に負けて表示されてしまうのを防ぐ */
+[hidden] {
+  display: none !important;
+}
+
+/* キーボード操作で今どこにいるかを見えるようにする */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--rt-focus);
+  outline-offset: 2px;
+}
+
+/* マウスで押したときは枠を出さない */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* 動きを減らす設定の人に配慮する */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- 共通部品 ------------------------------------------------------ */
+
+/* 画面外に隠して、読み上げだけに使う */
+.rt-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 「本文へ移動」リンク。Tab を押した最初だけ表示する */
+.rt-skip-link {
+  position: absolute;
+  top: -48px;
+  left: 8px;
+  z-index: 1000;
+  padding: 10px 16px;
+  background: var(--rt-olive);
+  color: #fff;
+  text-decoration: none;
+  border-radius: var(--rt-radius);
+}
+
+.rt-skip-link:focus {
+  top: 8px;
+}
+
+/* ボタン: 主ボタンは1画面に1つ */
+.rt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rt-space-2);
+  min-height: var(--rt-tap-size);
+  padding: 10px 22px;
+  border: 1px solid var(--rt-olive);
+  border-radius: var(--rt-radius);
+  background: var(--rt-surface);
+  color: var(--rt-olive);
+  font: inherit;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.rt-btn:hover {
+  background: var(--rt-olive-soft);
+}
+
+.rt-btn--primary {
+  background: var(--rt-olive);
+  color: #fff;
+}
+
+.rt-btn--primary:hover {
+  background: var(--rt-olive-dark);
+  border-color: var(--rt-olive-dark);
+}
+
+.rt-btn--danger {
+  border-color: var(--rt-error);
+  background: var(--rt-surface);
+  color: var(--rt-error);
+}
+
+.rt-btn--danger:hover {
+  background: var(--rt-error-soft);
+}
+
+.rt-btn--block {
+  display: flex;
+  width: 100%;
+}
+
+.rt-btn:disabled,
+.rt-btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* フォーム: ラベル → 入力欄 → 補足 → エラー の順に並べる */
+.rt-field {
+  display: grid;
+  gap: 6px;
+  margin-bottom: var(--rt-space-4);
+}
+
+.rt-label {
+  color: var(--rt-ink);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rt-required {
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: var(--rt-radius);
+  background: var(--rt-error);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.rt-input,
+.rt-select,
+.rt-textarea {
+  width: 100%;
+  min-height: var(--rt-tap-size);
+  padding: 10px 12px;
+  border: 1px solid var(--rt-line);
+  border-radius: var(--rt-radius);
+  background: var(--rt-surface);
+  color: var(--rt-ink);
+  font: inherit;
+}
+
+.rt-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.rt-input[aria-invalid="true"],
+.rt-select[aria-invalid="true"],
+.rt-textarea[aria-invalid="true"] {
+  border-color: var(--rt-error);
+  background: var(--rt-error-soft);
+}
+
+.rt-hint {
+  margin: 0;
+  color: var(--rt-ink-sub);
+  font-size: 13px;
+}
+
+.rt-error {
+  margin: 0;
+  color: var(--rt-error);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.rt-error:empty {
+  display: none;
+}
+
+/* カード・空の状態・通知 */
+.rt-card {
+  padding: var(--rt-space-5);
+  border: 1px solid var(--rt-line);
+  border-radius: var(--rt-radius);
+  background: var(--rt-surface);
+}
+
+.rt-empty {
+  padding: 40px 16px;
+  border: 1px dashed var(--rt-line);
+  border-radius: var(--rt-radius);
+  background: var(--rt-surface);
+  color: var(--rt-ink-sub);
+  text-align: center;
+}
+
+.rt-empty > .rt-btn {
+  margin-top: var(--rt-space-4);
+}
+
+.rt-toast {
+  padding: 12px 16px;
+  border-left: 4px solid var(--rt-success);
+  border-radius: var(--rt-radius);
+  background: var(--rt-surface);
+  color: var(--rt-ink);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* ヘッダー: 戻る / ロゴ / 右側リンク の3列 */
+.rt-topbar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  min-height: var(--rt-header-height);
+  padding: 0 28px;
+  border-bottom: 1px solid var(--rt-line);
+  background: var(--rt-surface);
+}
+
+.rt-topbar__back,
+.rt-topbar__brand,
+.rt-topbar__link {
+  color: var(--rt-ink);
+  text-decoration: none;
+}
+
+.rt-topbar__back {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--rt-tap-size);
+  font-size: 14px;
+}
+
+.rt-topbar__brand {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.rt-topbar__link {
+  justify-self: end;
+  font-size: 13px;
+}
+
+/* ページ本体 */
+.rt-page {
+  max-width: var(--rt-page-width);
+  margin: 0 auto;
+  padding: 46px 24px 80px;
+}
+
+.rt-eyebrow {
+  margin: 0;
+  color: var(--rt-ink-sub);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+/* 商品カードの画像枠（画像がまだない仮表示） */
+.rt-image-placeholder {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  background: var(--rt-image-bg);
+  color: var(--rt-ink-sub);
+  font-size: 13px;
+}
+
+/* ---- スマホ幅 ------------------------------------------------------ */
+@media (max-width: 700px) {
+  .rt-topbar {
+    min-height: 62px;
+    padding: 0 14px;
+  }
+
+  .rt-topbar__brand {
+    font-size: 20px;
+  }
+
+  .rt-page {
+    padding: 30px 14px 60px;
+  }
+
+  .rt-btn--stack-sp {
+    display: flex;
+    width: 100%;
+  }
+}

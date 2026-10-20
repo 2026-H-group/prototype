@@ -11,6 +11,15 @@ const fields = {
   color: document.getElementById("colorFilter"),
   size: document.getElementById("sizeFilter")
 };
+const priceFilter = document.getElementById("priceFilter");
+const sortSelect = document.getElementById("sortSelect");
+
+// 価格帯の選択値（例: "1001-3000" / "6001-"）が商品の価格に合うか調べる
+function matchesPrice(price, range) {
+  if (!range) return true;
+  const [min, max] = range.split("-");
+  return price >= Number(min) && (max === "" || price <= Number(max));
+}
 
 function makeCard(product) {
   const card = document.createElement("article");
@@ -53,8 +62,11 @@ function renderResults() {
       && (!selected.style || product.style === selected.style)
       && (!selected.category || product.category === selected.category)
       && (!selected.color || product.color === selected.color)
-      && (!selected.size || product.size === selected.size);
+      && (!selected.size || product.size === selected.size)
+      && matchesPrice(Number(product.price), priceFilter.value);
   });
+  if (sortSelect.value === "priceAsc") visible.sort((a, b) => a.price - b.price);
+  if (sortSelect.value === "priceDesc") visible.sort((a, b) => b.price - a.price);
   results.replaceChildren(...visible.map(makeCard));
   status.textContent = `${visible.length}件の商品が見つかりました。`;
   emptyState.hidden = visible.length > 0;
@@ -64,8 +76,10 @@ searchInput.value = new URLSearchParams(window.location.search).get("q") || "";
 searchForm.addEventListener("submit", (event) => { event.preventDefault(); renderResults(); });
 searchInput.addEventListener("input", renderResults);
 filterForm.addEventListener("change", renderResults);
+sortSelect.addEventListener("change", renderResults);
 document.getElementById("resetFilters").addEventListener("click", () => {
   filterForm.reset();
+  sortSelect.value = "recommended";
   searchInput.value = "";
   renderResults();
 });
