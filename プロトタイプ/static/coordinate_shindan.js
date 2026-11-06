@@ -1,152 +1,163 @@
-// ====================================================
-// コーディネート診断（AIコーディネートアドバイザー）
-//
-// 今はまだ本物のAI API（オープンAIなど）と繋がっていないので、
-// ランダムな結果を返す「模擬（モック）」のロジックにしている。
-// hyouka_review.js と同じ考え方で、表示するデータを配列にまとめてから
-// JSでHTMLを組み立てる方式にしている（HTMLに直接書かない）。
-//
-// 将来ここを本物のAI呼び出しに置き換えるときは、
-// runCoordinateDiagnosis() の中身だけ書き換えればOK
-// （呼び出し側の renderDiagnosis() は変更不要）。
-// ====================================================
-
-// ユーザーが選んだアイテム（本来はマイクローゼットや出品データから取得する）
-const defaultItems = [
-  { id: 3, name: "ヴィンテージデニムジャケット", price: "¥8,900" },
-  { id: 2, name: "ハンドメイドニットセーター", price: "¥5,400" },
-  { id: 6, name: "コットンワイドパンツ", price: "¥4,200" },
-];
-const purchaseItems = [
-  { id: 1, name: "シンプルブラックTシャツ", price: "¥3,980", category: "トップス", color: "ブラック", size: "M", purchase: true },
-  { id: 3, name: "ヴィンテージデニムジャケット", price: "¥8,900", category: "アウター", color: "インディゴ", size: "L", purchase: true },
+const categoryOrder = [
+  ["tops", "トップス"],
+  ["outer", "アウター"],
+  ["bottoms", "ボトムス"],
+  ["shoes", "靴"],
+  ["accessories", "アクセサリー"],
 ];
 const closetItems = JSON.parse(localStorage.getItem("reTailorMyCloset") || "[]");
-const purchasedItemId = Number(new URLSearchParams(window.location.search).get("item"));
-const purchasedItem = purchaseItems.find((item) => item.id === purchasedItemId);
-const selectedItems = purchasedItem
-  ? [purchasedItem]
-  : closetItems.length
-  ? closetItems.map((item) => ({ name: item.name, price: `${item.categoryLabel} / ${item.color || "色未登録"}`, image: item.image, closet: true }))
-  : defaultItems;
-
-// AIが「この着こなしに合う」として返すおすすめアイテムの候補セット
-// （診断のたびにこの中から1セットをランダムに選ぶ）
-const recommendationPools = [
-  [
-    { id: 5, name: "レザーベルト", price: "¥1,800" },
-    { id: 4, name: "キャンバストートバッグ", price: "¥3,200" },
-    { id: 7, name: "ウールマフラー", price: "¥2,400" },
-  ],
-  [
-    { id: 8, name: "チェーンネックレス", price: "¥1,500" },
-    { id: 4, name: "フェルトハット", price: "¥2,800" },
-    { id: 1, name: "レザーシューズ", price: "¥6,500" },
-  ],
-  [
-    { id: 8, name: "シルバーピアス", price: "¥1,200" },
-    { id: 3, name: "デニムキャップ", price: "¥2,100" },
-    { id: 5, name: "ミニショルダーバッグ", price: "¥4,600" },
-  ],
+const purchaseItems = [
+  { id: 1, name: "シンプルブラックTシャツ", category: "トップス", color: "ブラック", size: "M", purchase: true },
+  { id: 3, name: "ヴィンテージデニムジャケット", category: "アウター", color: "インディゴ", size: "L", purchase: true },
 ];
-
-// 色の組み合わせ候補（本来はAIが服の画像から色を解析して返す）
+const purchasedItem = purchaseItems.find((item) => item.id === Number(new URLSearchParams(location.search).get("item")));
+const recommendationPools = [
+  [{ id: 5, name: "レザーベルト", price: "¥1,800" }, { id: 4, name: "キャンバストートバッグ", price: "¥3,200" }, { id: 7, name: "ウールマフラー", price: "¥2,400" }],
+  [{ id: 8, name: "チェーンネックレス", price: "¥1,500" }, { id: 4, name: "フェルトハット", price: "¥2,800" }, { id: 1, name: "レザーシューズ", price: "¥6,500" }],
+  [{ id: 8, name: "シルバーピアス", price: "¥1,200" }, { id: 3, name: "デニムキャップ", price: "¥2,100" }, { id: 5, name: "ミニショルダーバッグ", price: "¥4,600" }],
+];
 const colorPalettes = [
   ["#3f4a2e", "#8a5a2b", "#a3312c", "#d9d5cc", "#1c1c1c"],
   ["#274060", "#c9a66b", "#5c5346", "#e8e3d8", "#2e2e2e"],
   ["#5b3a29", "#a68a64", "#d6c7a1", "#333333", "#7a1f1f"],
 ];
-
-// AI提案として表示するコメント（本来はAIが生成した文章）
 const suggestionMessages = [
-  "この組み合わせ、いい感じにまとまっています ✨",
-  "落ち着いた色合いでバランスが良いコーディネートです",
-  "アクセントカラーが効いた、おしゃれな組み合わせです",
+  "この組み合わせ、いい感じにまとまっています。",
+  "落ち着いた色合いでバランスが良いコーディネートです。",
+  "アクセントカラーが効いた、おしゃれな組み合わせです。",
 ];
+const $ = (id) => document.getElementById(id);
+let diagnosisTimer;
 
-// ---- 1. 診断結果を作る（今はランダムなモック） ----
-function runCoordinateDiagnosis() {
-  const score = Math.floor(Math.random() * (98 - 70 + 1)) + 70; // 70〜98%
-  const palette = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
-  const message = suggestionMessages[Math.floor(Math.random() * suggestionMessages.length)];
-  const recommended = recommendationPools[Math.floor(Math.random() * recommendationPools.length)];
-  return { score, palette, message, recommended };
+function getSelectedItems() {
+  const selected = [...$("closetSelectors").querySelectorAll("input:checked")]
+    .map((input) => closetItems[Number(input.value)])
+    .filter(Boolean)
+    .map((item) => ({ ...item, closet: true }));
+  return purchasedItem ? [purchasedItem, ...selected] : selected;
 }
 
-// ---- 2. 商品名・価格つきのアイテムカードをまとめて描画する ----
-// selectedItems（変わらない）と recommendedItems（診断のたびに変わる）の
-// どちらもこの関数を使って組み立てる
+function renderClosetSelectors() {
+  const container = $("closetSelectors");
+  categoryOrder.forEach(([key, label]) => {
+    const items = closetItems.map((item, index) => ({ item, index }))
+      .filter(({ item }) => item.category === key);
+    if (!items.length) return;
+    const group = document.createElement("fieldset");
+    group.className = "closet-category";
+    const legend = document.createElement("legend");
+    legend.textContent = label;
+    group.append(legend);
+    items.forEach(({ item, index }, itemPosition) => {
+      const option = document.createElement("label");
+      option.className = "closet-option";
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.value = String(index);
+      checkbox.checked = itemPosition === 0 && purchasedItem?.category !== label;
+      const name = document.createElement("span");
+      name.textContent = `${item.name}${item.color ? `（${item.color}）` : ""}`;
+      option.append(checkbox, name);
+      group.append(option);
+    });
+    container.append(group);
+  });
+  $("selectionEmpty").hidden = closetItems.length > 0;
+}
+
+function createItemCard(item) {
+  const card = document.createElement("div");
+  card.className = "coord-item";
+  const link = document.createElement("a");
+  link.className = `img-box${item.image ? " has-image" : " empty"}`;
+  link.href = item.purchase ? `purchase-history-detail.html?id=${item.id}` : item.closet ? "my-closet.html" : `detail.html?id=${item.id}`;
+  link.setAttribute("aria-label", `${item.name}の情報`);
+  if (typeof item.image === "string" && item.image.startsWith("data:image/")) {
+    const image = document.createElement("img");
+    image.src = item.image;
+    image.alt = `${item.name}の写真`;
+    link.append(image);
+  }
+  const name = document.createElement("p");
+  name.className = "coord-item-name";
+  name.textContent = item.name;
+  const meta = document.createElement("p");
+  meta.className = "coord-item-price";
+  meta.textContent = item.categoryLabel || item.category
+    ? [item.categoryLabel || item.category, item.color].filter(Boolean).join(" / ")
+    : item.price || "";
+  card.append(link, name, meta);
+  return card;
+}
+
 function renderItemGrid(containerId, items) {
-  const grid = document.getElementById(containerId);
-  grid.innerHTML = items
-    .map(
-      (item) => `
-        <div class="coord-item">
-          <a class="img-box${item.image ? " has-image" : " empty"}" href="${item.purchase ? `purchase-history-detail.html?id=${item.id}` : item.closet ? "my-closet.html" : `detail.html?id=${item.id}`}" aria-label="${item.name}の情報">${item.image ? `<img src="${item.image}" alt="${item.name}の写真">` : ""}</a>
-          <p class="coord-item-name">${item.name}</p>
-          <p class="coord-item-price">${item.price}</p>
-        </div>
-      `
-    )
-    .join("");
+  const grid = $(containerId);
+  grid.replaceChildren(...items.map(createItemCard));
 }
 
-// ---- 3. 「あなたが選んだアイテム」は最初に一度だけ描画する ----
 function renderSelectedItems() {
-  renderItemGrid("selectedItems", selectedItems);
+  const items = getSelectedItems();
+  renderItemGrid("selectedItems", items);
+  $("selectedCount").textContent = `（${items.length}件）`;
+  $("selectedEmpty").hidden = items.length > 0;
+  $("saveComboBtn").disabled = items.length === 0;
 }
 
-// ---- 4. 診断結果を画面に反映する ----
-function applyDiagnosisResult(result) {
-  document.getElementById("compatScore").textContent = result.score + "%";
-  document.getElementById("compatBarFill").style.width = result.score + "%";
-  document.getElementById("aiSuggestionText").textContent = result.message;
-
-  const dotsWrap = document.getElementById("colorDots");
-  dotsWrap.innerHTML = result.palette
-    .map((color) => `<span class="dot" style="background:${color}"></span>`)
-    .join("");
-
-  renderItemGrid("recommendedItems", result.recommended);
+function runCoordinateDiagnosis() {
+  return {
+    score: Math.floor(Math.random() * 29) + 70,
+    palette: colorPalettes[Math.floor(Math.random() * colorPalettes.length)],
+    message: suggestionMessages[Math.floor(Math.random() * suggestionMessages.length)],
+    recommended: recommendationPools[Math.floor(Math.random() * recommendationPools.length)],
+  };
 }
 
-// ---- 5. 「診断中…」の演出を挟んでから結果を反映する ----
-// 本物のAI APIに繋いだときは、この setTimeout の部分が実際の通信待ちになる
 function renderDiagnosis() {
-  const box = document.getElementById("aiSuggestionBox");
-  const text = document.getElementById("aiSuggestionText");
-  const retryBtn = document.getElementById("retryBtn");
-
+  clearTimeout(diagnosisTimer);
+  const box = $("aiSuggestionBox");
+  const text = $("aiSuggestionText");
+  const retryBtn = $("retryBtn");
+  if (!getSelectedItems().length) {
+    box.classList.remove("loading");
+    text.textContent = "アイテムを選択するとコーディネートを診断します。";
+    $("compatScore").textContent = "--%";
+    $("compatBarFill").style.width = "0";
+    $("colorDots").replaceChildren();
+    $("recommendedItems").replaceChildren();
+    retryBtn.disabled = true;
+    return;
+  }
   box.classList.add("loading");
   text.textContent = "診断中…";
-  retryBtn.disabled = true; // 診断中は連打できないようにする
-
-  window.setTimeout(() => {
+  retryBtn.disabled = true;
+  diagnosisTimer = window.setTimeout(() => {
     const result = runCoordinateDiagnosis();
-    applyDiagnosisResult(result);
+    $("compatScore").textContent = `${result.score}%`;
+    $("compatBarFill").style.width = `${result.score}%`;
+    text.textContent = result.message;
+    $("colorDots").replaceChildren(...result.palette.map((color) => {
+      const dot = document.createElement("span");
+      dot.className = "dot";
+      dot.style.backgroundColor = color;
+      return dot;
+    }));
+    renderItemGrid("recommendedItems", result.recommended);
     box.classList.remove("loading");
     retryBtn.disabled = false;
   }, 600);
 }
 
-// ---- 6. 「やり直す」ボタン：もう一度診断し直す ----
-function setupRetryButton() {
-  document.getElementById("retryBtn").addEventListener("click", renderDiagnosis);
-}
-
-// ---- 7. 「この組み合わせを保存」ボタン ----
-function setupSaveButton() {
-  document.getElementById("saveComboBtn").addEventListener("click", () => {
-    const status = document.getElementById("saveStatus");
-    status.textContent = "この組み合わせを保存しました。";
-    document.getElementById("saveComboBtn").disabled = true;
-  });
-}
-
-// ---- 8. ページ読み込み時に初期化 ----
 document.addEventListener("DOMContentLoaded", () => {
+  renderClosetSelectors();
+  $("closetSelectors").addEventListener("change", () => {
+    renderSelectedItems();
+    renderDiagnosis();
+  });
+  $("retryBtn").addEventListener("click", renderDiagnosis);
+  $("saveComboBtn").addEventListener("click", () => {
+    $("saveStatus").textContent = "この組み合わせを保存しました。";
+    $("saveComboBtn").disabled = true;
+  });
   renderSelectedItems();
   renderDiagnosis();
-  setupRetryButton();
-  setupSaveButton();
 });

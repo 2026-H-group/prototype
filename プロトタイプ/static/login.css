@@ -200,6 +200,13 @@ object-fit: contain;
     padding: 0 10px;
 }
 
+.form-message {
+    min-height: 18px;
+    margin: 10px 0 0;
+    color: #365f20;
+    font-size: 12px;
+}
+
 
 .error {
     color: #d33;

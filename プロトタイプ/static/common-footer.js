@@ -26,9 +26,9 @@
       </div>
       <div class="site-footer-bottom">
         <div class="site-footer-legal" aria-label="ポリシー">
-          <span>利用規約</span>
+          <a href="terms.html">利用規約</a>
           <span class="site-footer-separator" aria-hidden="true">|</span>
-          <span>プライバシーポリシー</span>
+          <a href="privacy-policy.html">プライバシーポリシー</a>
         </div>
         <small>© ${new Date().getFullYear()} Re:Tailor</small>
       </div>

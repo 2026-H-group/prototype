@@ -22,11 +22,18 @@
     <div class="page">
       <div class="content">
 
-        <!-- ② ユーザーが選んだ、または手持ちの商品として選択したアイテム一覧
-             中身は coordinate_shindan.js が商品名・価格つきで描画する -->
+        <!-- マイクローゼットからカテゴリ別に診断するアイテムを選択 -->
         <section class="coord-card">
-          <div class="field-label">あなたが選んだアイテム</div>
+          <div class="field-label">マイクローゼットからアイテムを選択</div>
+          <p class="selection-note">カテゴリごとに選べます。複数のアイテムを選択できます。</p>
+          <div class="closet-selectors" id="closetSelectors"></div>
+          <p class="selection-empty" id="selectionEmpty" hidden>登録アイテムがありません。<a href="my-closet-register.html">アイテムを登録する</a></p>
+        </section>
+
+        <section class="coord-card">
+          <div class="field-label">あなたが選んだアイテム <span id="selectedCount"></span></div>
           <div class="images" id="selectedItems"></div>
+          <p class="selection-empty" id="selectedEmpty" hidden>診断するアイテムを選択してください。</p>
         </section>
 
         <!-- ③ AIが生成したコーディネート提案のビジュアル表示 -->

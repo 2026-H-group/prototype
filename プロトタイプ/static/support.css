@@ -40,6 +40,10 @@ h1 { margin: 0; font-size: 34px; line-height: 1.35; }
 .category-nav a:hover { border-color: var(--support-olive); color: var(--support-olive); }
 .faq-section { padding-top: 28px; scroll-margin-top: 20px; }
 .faq-section h2, .contact-callout h2 { margin: 0 0 12px; font-size: 20px; }
+.legal-section { padding-bottom: 24px; border-bottom: 1px solid var(--support-line); }
+.legal-section p, .legal-section li { color: var(--support-muted); font-size: 14px; }
+.legal-section p { margin: 0 0 12px; }
+.legal-section ul { margin: 0 0 12px; padding-left: 1.5em; }
 .faq-item { border-top: 1px solid var(--support-line); }
 .faq-item:last-child { border-bottom: 1px solid var(--support-line); }
 .faq-item summary { position: relative; padding: 16px 40px 16px 4px; font-weight: 700; cursor: pointer; list-style: none; }

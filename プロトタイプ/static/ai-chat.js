@@ -81,7 +81,7 @@ function startRequest(topic) {
     if (!garment) {
       const link = document.createElement("a");
       link.className = "inline-link";
-      link.href = "my-closet.html";
+      link.href = "my-closet-register.html";
       link.textContent = "マイクローゼットに服を登録する →";
       messages.lastElementChild.querySelector(".bubble").append(link);
     }
