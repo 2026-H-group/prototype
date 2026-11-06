@@ -13,7 +13,7 @@ if (summary[2]) summary[2].textContent = yen(total + 300);
 const purchaseButton = document.querySelector(".purchase-action");
 const backButton = document.querySelector(".back-action");
 if (backButton) backButton.href = `buy.html?items=${ids.join(",")}`;
-if (purchaseButton) purchaseButton.href = `purchase-history.html?items=${ids.join(",")}`;
+if (purchaseButton) purchaseButton.href = `purchase-complete.html?items=${ids.join(",")}`;
 if (purchaseButton) purchaseButton.addEventListener("click", (event) => {
 	event.preventDefault();
 	if (selected.length === 0) {
@@ -27,5 +27,5 @@ if (purchaseButton) purchaseButton.addEventListener("click", (event) => {
 	localStorage.setItem("reTailorPurchaseHistory", JSON.stringify(orders));
 	const cart = JSON.parse(localStorage.getItem("reTailorCart") || "[]");
 	localStorage.setItem("reTailorCart", JSON.stringify(cart.filter((cartId) => !ids.includes(Number(cartId)))));
-	window.location.href = `purchase-history.html?order=${encodeURIComponent(order.id)}`;
+	window.location.href = `purchase-complete.html?order=${encodeURIComponent(order.id)}`;
 });

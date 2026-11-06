@@ -35,4 +35,16 @@ if (!order || !item) {
 	const query = `order=${encodeURIComponent(order.id)}&product=${encodeURIComponent(item.id)}`;
 	document.getElementById("reviewLink").href = `review.html?${query}`;
 	document.getElementById("coordinateLink").href = `coordinate_shindan.html?item=${encodeURIComponent(item.id)}&order=${encodeURIComponent(order.id)}`;
+	const closetButton = document.getElementById("closetRegisterButton");
+	const closetStatus = document.getElementById("closetRegisterStatus");
+	if (!window.reTailorClosetPurchases.isRegistered(order, item)) {
+		closetButton.hidden = false;
+		closetButton.addEventListener("click", () => {
+			const added = window.reTailorClosetPurchases.addItems(order, [item]);
+			closetButton.hidden = true;
+			closetStatus.textContent = added.length
+				? "マイクローゼットに登録しました。"
+				: "この商品はすでにマイクローゼットに登録されています。";
+		});
+	}
 }
